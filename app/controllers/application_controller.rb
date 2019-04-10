@@ -1,4 +1,6 @@
 require './config/environment'
+require 'sinatra/base'
+#require 'rack-flash'
 
 class ApplicationController < Sinatra::Base
   #use Rack::Flash
@@ -11,7 +13,7 @@ class ApplicationController < Sinatra::Base
     set :session_secret, 'password_security'
   end
 
-  get "/" do
+  get "/users" do
     erb :'users/welcome'
   end
 
@@ -23,11 +25,21 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  post '/users/login' do
-    #validators in user class already check for presence of name, email and password
+
+  post '/users/signup' do
     if params[:email].match(URI::MailTo::EMAIL_REGEXP).present?
-      @user = User.create(params)
+      @user = User.new(name: params[:name], email: params[:email], password: params[:password])
     end
+
+    post '/users/signup' do
+      user = User.new(:username => params[:username], :password => params[:password])
+      if user.save?
+        redirect "/users/login"
+      else
+       #flash[:error] = "Something went wrong. Please try again."
+      end
+    end
+
 
     if @user
       #flash[:message] = "Account successfully created"
@@ -35,6 +47,22 @@ class ApplicationController < Sinatra::Base
     else
       #flash[:error] = "Something went wrong. Please try again."
       redirect to '/users/signup'
+    end
+  end
+
+  get '/users/login' do
+    erb: login
+  end
+
+  post '/users/login' do
+    user = User.find_by(:email => params["email"])
+
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      redirect to '/users/dashboard'
+    else
+      #flash[:login_error] = "Incorrect login. Please try again."
+      redirect to '/users/login'
     end
   end
 

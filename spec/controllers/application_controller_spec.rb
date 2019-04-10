@@ -1,4 +1,6 @@
 require_relative "../spec_helper"
+require sinatra/base
+
 
 def app
   ApplicationController
@@ -6,7 +8,7 @@ end
 
 describe ApplicationController do
   it 'loads the welcome page' do
-    get '/'
+    get '/users'
     expect(last_response.status).to eq(200)
     expect(last_response.body).to include("Welcome to your project Supply Tracker!")
   end
@@ -18,69 +20,53 @@ describe "Signup Page" do
     expect(last_response.status).to eq(200)
     expect(last_response.body).to include("Please sign up to use our free service")
     expect(last_response.body).to include("</form>")
-
   end
 
-  it 'signup directs user to signup' do
-  params = {
-    :name => "bananas123",
-    :email => "bananas@aol.com",
-    :password => "howgoesit"
-  }
-  post '/users/signup', params
-  expect(last_response.location).to include("/users/signup")
-  end
-
-  it 'does not let a user sign up without a name' do
+  it 'reloads signup page if user tries to sign up without a name' do
     params = {
       :name => "",
       :email => "banana@aol.com",
       :password => "howgoesit"
     }
     post '/users/signup', params
-    expect(last_response.location).to include('/users/signup')
+    expect(page).to have_current_path('/users/login')
   end
 
   it 'does not let a user sign up without an email' do
-    params = {
-      :name => "bananas123",
-      :email => "",
-      :password => "howgoesit"
-    }
-    post '/users/signup', params
-    expect(last_response.location).to include('/users/signup')
+    visit '/users/signup'
+    fill_in "name", :with => "Garfield"
+    fill_in "email", :with => ""
+    fill_in ":password", :with => "lasagna"
+    click_button "submit"
+    expect(last_request.path).to eq('/users/signup')
   end
 
+
   it 'does not let a user sign up without a password' do
-    params = {
-      :name => "bananas123",
-      :email => "bananas@aol.com",
-      :password => ""
-    }
-    post '/users/signup', params
-    expect(last_response.location).to include('/users/signup')
+    visit '/users/signup'
+    fill_in "name", :with => "Garfield"
+    fill_in "email", :with => "garfield@jon.com"
+    fill_in ":password", :with => ""
+    click_button "submit"
+    expect(last_request.path).to eq('/users/signup')
   end
 
   it 'does not let a user sign up with an invalid email' do
-    params = {
-      :name => "bananas123",
-      :email => "bananas@aol.com",
-      :password => ""
-    }
-    post '/users/login', params
-    expect(flash[:error]).to match(/Something went wrong.*/)
-    expect(last_response.location).to include('/users/signup')
+    visit '/users/signup'
+    fill_in "name", :with => "Garfield"
+    fill_in "email", :with => "garfield"
+    fill_in ":password", :with => "lasagna"
+    click_button "submit"
+    expect(last_request.path).to eq('/users/signup')
   end
 
   it 'creates a new user and logs them in on valid submission and does not let a logged in user view the signup page' do
-    params = {
-      :name => "bananas123",
-      :email => "bananas@aol.com",
-      :password => "howgoesit"
-    }
-    post '/users/login', params
-    get '/users/login'
-    expect(last_response.location).to include('/login')
+    visit '/users/signup'
+    fill_in "name", :with => "Garfield"
+    fill_in "email", :with => "garfield@jon.com"
+    fill_in ":password", :with => "lasagna"
+    click_button "submit"
+    expect(last_request.path).to eq('/users/dashboard')
   end
 end
 
@@ -110,11 +96,9 @@ describe "login" do
     follow_redirect!
     expect(last_response.status).to eq(200)
     expect(last_response.body).to have_content("Dashboard")
-
     post '/users/login', params2
     expect(last_response.location).to include("/login")
   end
-
 
 
   it 'does not let user view login page if already logged in' do
@@ -132,7 +116,6 @@ end
 describe "logout" do
   it "lets a user logout if they are already logged in" do
     user = User.create(:name => "becky567", :email => "starz@aol.com", :password => "kittens")
-
     params = {
       :name => "becky567",
       :password => "kittens"
@@ -154,10 +137,7 @@ describe "logout" do
 
   it 'does load /dashboard if user is logged in' do
     user = User.create(:name => "becky567", :email => "starz@aol.com", :password => "kittens")
-
-
     visit '/login'
-
     fill_in(:name, :with => "becky567")
     fill_in(:password, :with => "kittens")
     click_button 'submit'
@@ -170,7 +150,6 @@ describe 'dashboard (user show) page' do
     user = User.create(:name => "becky567", :email => "starz@aol.com", :password => "kittens")
     project1 = Project.create(:name => "GGS", :type => "event", :date => "September 1, 2019", :attendees => 100, :supplies => 200.00)
     get "/users/#{user.id}"
-
     expect(last_response.body).to include("GGS")
     expect(last_response.body).to include("September 1, 2019")
 
