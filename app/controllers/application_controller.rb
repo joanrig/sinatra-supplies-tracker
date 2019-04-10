@@ -1,8 +1,7 @@
 require './config/environment'
 
 class ApplicationController < Sinatra::Base
-  enable :sessions
-  use Rack::Flash
+  #use Rack::Flash
 
   configure do
     set :public_folder, 'public'
@@ -17,7 +16,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/users/signup' do
-    if Helpers.is_logged_in?
+    if Helpers.is_logged_in?(session)
       erb :'/users/dashboard'
     else
       erb :'/users/signup'
@@ -25,21 +24,21 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/users/login' do
-    #validators in user class already check for presence of name, username, email
-    if @email.match(URI::MailTo::EMAIL_REGEXP).present?
+    #validators in user class already check for presence of name, email and password
+    if params[:email].match(URI::MailTo::EMAIL_REGEXP).present?
       @user = User.create(params)
     end
 
     if @user
-      flash[:message] = "Account successfully created"
-      erb :'/users/dashboard'
+      #flash[:message] = "Account successfully created"
+      redirect to '/users/dashboard'
     else
-      flash[:error] = "Something went wrong. Please try again."
-      erb :'/users/signup'
+      #flash[:error] = "Something went wrong. Please try again."
+      redirect to '/users/signup'
     end
   end
 
-  get '/users/dashboard' do 
+  get '/users/dashboard' do
     erb :'/users/dashboard'
   end
 
