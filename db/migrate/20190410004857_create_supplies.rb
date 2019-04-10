@@ -3,9 +3,11 @@ class CreateSupplies < ActiveRecord::Migration
     create_table :supplies do |t|
       t.string :name
       t.string :supplier
-      t.string :link
-      t.decimal :estimated_price
+      t.string :supplier_link
+      t.string :unit_type
+      t.decimal :price_per_unit
       t.integer :quantity_needed
+      t.decimal :total_price
     end
   end
 end
