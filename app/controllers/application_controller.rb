@@ -1,6 +1,6 @@
 require './config/environment'
 require 'sinatra/base'
-require 'sinatra-flash'
+#require 'sinatra-flash'
 
 class ApplicationController < Sinatra::Base
 
@@ -10,11 +10,11 @@ class ApplicationController < Sinatra::Base
 
     enable :sessions
     set :session_secret, 'password_security'
-    register Sinatra::Flash
+    #register Sinatra::Flash
   end
 
   get "/users" do
-    flash[:notice] = "Hooray, Flash is working!"
+    #flash[:notice] = "Hooray, Flash is working!"
     erb :'users/welcome'
   end
 
@@ -30,9 +30,10 @@ class ApplicationController < Sinatra::Base
     post '/users/signup' do
       if params[:email].match(URI::MailTo::EMAIL_REGEXP).present?
       user = User.new(:name => params[:name], :password => params[:password])
-      if user.save?
+      if user.save
         redirect "/users/login"
       else
+        redirect "/users/signup"
        #flash[:error] = "Something went wrong. Please try again."
       end
     end
