@@ -9,6 +9,7 @@ describe ApplicationController do
     get '/'
     expect(last_response.status).to eq(200)
     expect(last_response.body).to include("Welcome to your project Supply Tracker!")
+    expect(last_response.body).to have_content("submit," "button")
   end
 end
 
@@ -16,6 +17,9 @@ describe "Signup Page" do
   it 'loads the signup page' do
     get '/signup'
     expect(last_response.status).to eq(200)
+    expect(page.body).to include("Please sign up to use our free service")
+    expect(page.body).to include("<form")
+
   end
 
   it 'signup directs user to dashboard' do
@@ -25,7 +29,7 @@ describe "Signup Page" do
     :password => "howgoesit"
   }
   post '/signup', params
-  expect(last_response.location).to include("/projects")
+  expect(last_response.location).to include("/projects/dashboard")
   end
 
   it 'does not let a user sign up without a username' do
