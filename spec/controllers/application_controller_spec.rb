@@ -5,31 +5,30 @@ def app
 end
 
 describe ApplicationController do
-  it "responds with a welcome message" do
+  it 'loads the welcome page' do
     get '/'
     expect(last_response.status).to eq(200)
     expect(last_response.body).to include("Welcome to your project Supply Tracker!")
-    expect(last_response.body).to have_content("submit," "button")
   end
 end
 
 describe "Signup Page" do
   it 'loads the signup page' do
-    get '/signup'
+    get '/users/signup'
     expect(last_response.status).to eq(200)
-    expect(page.body).to include("Please sign up to use our free service")
-    expect(page.body).to include("<form")
+    expect(last_response.body).to include("Please sign up to use our free service")
+    expect(last_response.body).to include("</form>")
 
   end
 
-  it 'signup directs user to dashboard' do
+  it 'signup directs user to signup' do
   params = {
     :username => "bananas123",
     :email => "bananas@aol.com",
     :password => "howgoesit"
   }
-  post '/signup', params
-  expect(last_response.location).to include("/projects/dashboard")
+  post '/users/signup', params
+  expect(last_response.location).to include("/users/signup")
   end
 
   it 'does not let a user sign up without a username' do
@@ -38,8 +37,8 @@ describe "Signup Page" do
       :email => "banana@aol.com",
       :password => "howgoesit"
     }
-    post '/signup', params
-    expect(last_response.location).to include('/signup')
+    post '/users/signup', params
+    expect(last_response.location).to include('/users/signup')
   end
 
   it 'does not let a user sign up without an email' do
@@ -48,8 +47,8 @@ describe "Signup Page" do
       :email => "",
       :password => "howgoesit"
     }
-    post '/signup', params
-    expect(last_response.location).to include('/signup')
+    post '/users/signup', params
+    expect(last_response.location).to include('/users/signup')
   end
 
   it 'does not let a user sign up without a password' do
@@ -58,8 +57,19 @@ describe "Signup Page" do
       :email => "bananas@aol.com",
       :password => ""
     }
-    post '/signup', params
-    expect(last_response.location).to include('/signup')
+    post '/users/signup', params
+    expect(last_response.location).to include('/users/signup')
+  end
+
+  it 'does not let a user sign up with an invalid email' do
+    params = {
+      :username => "bananas123",
+      :email => "bananas@aol.com",
+      :password => ""
+    }
+    post '/users/login', params
+    expect(flash[:error]).to match(/Something went wrong.*/)
+    expect(last_response.location).to include('/users/signup')
   end
 
   it 'creates a new user and logs them in on valid submission and does not let a logged in user view the signup page' do
@@ -68,15 +78,16 @@ describe "Signup Page" do
       :email => "bananas@aol.com",
       :password => "howgoesit"
     }
-    post '/signup', params
-    get '/signup'
-    expect(last_response.location).to include('/dashboard')
+    post '/users/login', params
+    get '/users/login'
+    expect(last_response.location).to include('/login')
   end
 end
 
+
 describe "login" do
   it 'loads the login page' do
-    get '/login'
+    get '/users/login'
     expect(last_response.status).to eq(200)
   end
 
@@ -86,11 +97,11 @@ describe "login" do
       :username => "hullabaloo42",
       :password => "galaxy"
     }
-    post '/login', params
+    post '/users/login', params
     expect(last_response.status).to eq(302)
     follow_redirect!
     expect(last_response.status).to eq(200)
-    expect(last_response.body).to include("Welcome,")
+    expect(last_response.body).to include("Dashboard")
   end
 
   it 'does not let user view login page if already logged in' do
