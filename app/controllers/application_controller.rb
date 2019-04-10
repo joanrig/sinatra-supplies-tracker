@@ -1,19 +1,20 @@
 require './config/environment'
 require 'sinatra/base'
-#require 'rack-flash'
+require 'sinatra-flash'
 
 class ApplicationController < Sinatra::Base
 
-  #use Rack::Flash
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
 
     enable :sessions
     set :session_secret, 'password_security'
+    register Sinatra::Flash
   end
 
   get "/users" do
+    flash[:notice] = "Hooray, Flash is working!"
     erb :'users/welcome'
   end
 
@@ -26,13 +27,9 @@ class ApplicationController < Sinatra::Base
   end
 
 
-  post '/users/signup' do
-    if params[:email].match(URI::MailTo::EMAIL_REGEXP).present?
-      @user = User.new(name: params[:name], email: params[:email], password: params[:password])
-    end
-
     post '/users/signup' do
-      user = User.new(:username => params[:username], :password => params[:password])
+      if params[:email].match(URI::MailTo::EMAIL_REGEXP).present?
+      user = User.new(:name => params[:name], :password => params[:password])
       if user.save?
         redirect "/users/login"
       else
