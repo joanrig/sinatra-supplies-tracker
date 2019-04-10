@@ -13,12 +13,16 @@ class ApplicationController < Sinatra::Base
     #register Sinatra::Flash
   end
 
+  get "/" do
+    erb :'users/welcome'
+  end
+
   get "/users" do
     #flash[:notice] = "Hooray, Flash is working!"
     erb :'users/welcome'
   end
 
-  get '/users/signup' do
+  get '/users/signup' do #logged in user can't view login page
     if Helpers.is_logged_in?(session)
       erb :'/users/dashboard'
     else
@@ -26,26 +30,25 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-
-    post '/users/signup' do
+  post '/users/signup' do #create user and log them in
+    if params[:name] && params[:email] && params[:password]
       if params[:email].match(URI::MailTo::EMAIL_REGEXP).present?
-      user = User.new(:name => params[:name], :password => params[:password])
-      if user.save
-        redirect "/users/login"
-      else
-        redirect "/users/signup"
-       #flash[:error] = "Something went wrong. Please try again."
+        @user = User.create
+        @user.name = params[:name]
+        @user.email = params[:email]
+        @user.password = params[:password]
       end
     end
 
-
-    if @user
-      #flash[:message] = "Account successfully created"
+    if @user #flash[:message] = "Account successfully created"
       redirect to '/users/dashboard'
-    else
-      #flash[:error] = "Something went wrong. Please try again."
-      redirect to '/users/signup'
+    else #flash[:error] = "Something went wrong. Please try again."
+      redirect to '/users/error'
     end
+  end
+
+  get '/users/error' do
+    erb :'users/error'
   end
 
   get '/users/login' do
@@ -60,14 +63,12 @@ class ApplicationController < Sinatra::Base
       redirect to '/users/dashboard'
     else
       #flash[:login_error] = "Incorrect login. Please try again."
-      redirect to '/users/login'
+      redirect to '/users/error'
     end
   end
 
   get '/users/dashboard' do
     erb :'/users/dashboard'
   end
-
-
 
 end

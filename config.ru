@@ -6,4 +6,8 @@ end
 
 
 run ApplicationController
+use UsersController
+use ProjectsController
+use SuppliesController
+
 use Rack::MethodOverride

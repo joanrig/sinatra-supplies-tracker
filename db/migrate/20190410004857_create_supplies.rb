@@ -5,6 +5,7 @@ class CreateSupplies < ActiveRecord::Migration
       t.string :supplier
       t.string :supplier_link
       t.string :unit_type
+      t.decimal :estimated_price
       t.decimal :price_per_unit
       t.integer :quantity_needed
       t.decimal :total_price
