@@ -10,6 +10,7 @@ ActiveRecord::Base.establish_connection(
 
 require './app/controllers/application_controller'
 require 'uri'
+require 'sinatra/base'
 #require 'sinatra/flash'
 require 'pry'
 require_all 'app'

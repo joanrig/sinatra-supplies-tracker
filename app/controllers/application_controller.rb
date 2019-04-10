@@ -3,8 +3,8 @@ require 'sinatra/base'
 #require 'rack-flash'
 
 class ApplicationController < Sinatra::Base
-  #use Rack::Flash
 
+  #use Rack::Flash
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
@@ -51,7 +51,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/users/login' do
-    erb: login
+    erb :'/users/login'
   end
 
   post '/users/login' do

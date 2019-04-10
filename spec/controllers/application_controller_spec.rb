@@ -1,5 +1,5 @@
 require_relative "../spec_helper"
-require sinatra/base
+require 'sinatra/base'
 
 
 def app
