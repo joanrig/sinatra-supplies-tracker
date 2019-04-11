@@ -1,11 +1,12 @@
 <!-- can't get hello @username to work within erb tags -->
-<h2>Welcome to your dashboard</h2>
+<h2>Welcome to your dashboard, <%=@user.name%>!</h2>
+
 
 <h3>My Projects</h3>
 
   <% if @projects %>
     <% @projects.sort.each do |project| %>
-      <li> <a href="projects/<%= project.id %>"><%= project.name %></a>
+      <li> <a href="/projects/<%= project.id %>"><%= project.name %></a>
     <% end %>
   <% else %>
       <br>
@@ -15,3 +16,6 @@
   <% end %>
 
 <a href="/projects/new"><input type="submit" value="Create New Project"></a>
+
+<br>
+<a href="/users/logout"><input type="submit" value="Log Out"></a>

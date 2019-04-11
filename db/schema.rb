@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20190410005034) do
     t.date    "date"
     t.integer "attendees"
     t.decimal "supplies_budget"
+    t.integer "user_id"
   end
 
   create_table "supplies", force: :cascade do |t|
@@ -33,6 +34,8 @@ ActiveRecord::Schema.define(version: 20190410005034) do
     t.string  "unit_type"
     t.decimal "price_per_unit"
     t.integer "units_needed"
+    t.integer "project_id"
+    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|

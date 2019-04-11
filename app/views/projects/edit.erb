@@ -1,28 +1,29 @@
 <h2>Edit your project</h2>
-<h1><%= @project.name %></h1>
-<input type="text" name="name" placeholder="update name">
+<form action="/projects/<%=@project.id%>" method="post">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+    <h1><%= @project.name %></h1>
+    <input type="text" name="name" placeholder="update name">
 
-<h3>Type: </h3>
-<h4><%= @project.project_type %></h4>
-<input type="text" name="project_type" placeholder="update_project_type">
-<br>
-<h3>Date: </h3>
-<h4><%= @project.date %></h4>
-<input type="date" name="date" placeholder="new_date">
-<br>
-<h3>Attendees: </h3>
-<h4><%= @project.attendees %></h4>
-<input type="integer" name="attendees" placeholder="update number of attendees">
-<br>
-<h3>Supplies Budget:  </h3>
-<input type="integer" name="supplies_budget" placeholder="update supplies budget">
-<h4><%= @project.date %></h4>
-<br>
+    <h3>Type: </h3>
+    <h4><%= @project.project_type %></h4>
+    <input type="text" name="project_type" placeholder="update_project_type">
+    <br>
+    <h3>Date: </h3>
+    <h4><%= @project.date %></h4>
+    <input type="date" name="date" placeholder="new_date">
+    <br>
+    <h3>Attendees: </h3>
+    <h4><%= @project.attendees %></h4>
+    <input type="integer" name="attendees" placeholder="update number of attendees">
+    <br>
+    <h3>Supplies Budget:  </h3>
+    <input type="integer" name="supplies_budget" placeholder="update supplies budget">
+    <h4><%= @project.date %></h4>
+    <br>
+  <input type="submit" placeholder="Update Project">
 
-<form action="/projects/edit" method="post">
-<input id="hidden" type="hidden" name="_method" value="patch">
-
-
-<input type="submit" placeholder="Update Project">
-
+  <br>
+  <br>
+  <br>
+  <a href="/users/logout"><input type="submit" value="Log Out"></a>
 </form>

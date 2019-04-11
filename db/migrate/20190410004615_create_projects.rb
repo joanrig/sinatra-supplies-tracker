@@ -6,6 +6,7 @@ class CreateProjects < ActiveRecord::Migration
       t.date :date
       t.integer :attendees
       t.decimal :supplies_budget
+      t.integer :user_id
     end
   end
 end

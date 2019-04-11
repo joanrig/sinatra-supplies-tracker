@@ -4,48 +4,82 @@ class ProjectsController < ApplicationController
 
 
   get '/projects/new' do #works
+    @user = Helpers.current_user(session)
     if !Helpers.is_logged_in?(session)
-      redirect to '/login'
-    end
-    erb :'/projects/new'
-  end
-
-  post '/projects/new' do  #works
-    project = Project.create(params)
-
-    #binding.pry
-    if project
-      @project = Project.find_by(name: "#{project.name}")
-      redirect to :"/projects/#{project.id}"
+      #flash message: please log in to create your new project!
+      #binding.pry
+      redirect to '/users/login'
     else
-      redirect to "/projects/error"
+      #binding.pry
+      session[:user_id]  = @user.id
+      erb :'/projects/new'
     end
   end
 
-  get '/projects/edit' do
+  post '/projects' do
+    @user = Helpers.current_user(session)
     if !Helpers.is_logged_in?(session)
-      redirect to '/login'
+      binding.pry
+      redirect to '/users/login'
+    else
+      project = Project.create(params)
+      if project.save
+        #binding.pry
+        redirect to "/projects/#{project.id}"
+      else
+        erb :'/projects/error'
+      end
     end
-    # @user = User.find(session[:user_id])
-    # @user_id = session[:user_id]
-    # binding.pry
-    # @project = Project.find(params[:id])
-    # binding.pry
-    erb :'/projects/edit'
   end
 
-  get '/projects/:id' do #works
+
+  get '/projects/:id' do #get show page with edit button
     @user = Helpers.current_user(session)
     if !Helpers.is_logged_in?(session)
       redirect to '/login'
     end
-
     @project = Project.find_by_id(params[:id])
+    #binding.pry
     if @project
-      erb :"/projects/#{@project.id}"
+      erb :"/projects/show"
     else
-      redirect to :'users/dashboard'
+      redirect to '/users/dashboard'
     end
   end
+
+  get '/projects/:id/edit' do#get edit page
+    #binding.pry
+    @user = Helpers.current_user(session)
+    if !Helpers.is_logged_in?(session)
+      redirect to '/login'
+    end
+    @project = Project.find_by_id(params[:id])
+    @project.update(params)
+    erb :'/projects/edit'
+  end
+
+  patch '/:id' do#update project
+    @user = Helpers.current_user(session)
+    if !Helpers.is_logged_in?(session)
+      redirect to '/login'
+    end
+    @project = Project.find_by_id(params[:id])
+    params.delete(:_method)
+    @project.update(params)
+    binding.pry
+    @project.save
+    redirect to "/projects/#{@project.id}"#{show edited proj}
+  end
+
+    delete '/:id' do
+      @user = Helpers.current_user(session)
+      if !Helpers.is_logged_in?(session)
+        redirect to '/login'
+      end
+      @project = Project.find_by_id(params[:id])
+      if Helpers.current_user(session).id != @project.user_id
+      @project.delete
+
+    end
 
 end

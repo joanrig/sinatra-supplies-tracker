@@ -1,8 +1,19 @@
 to ask:
 
 
-why is shotgun view of browser showing error no method 'post' for #
+flash code for layout.erb
+<% flash.keys.each do |type| %>
+<div data-alert class="flash <%= type %> alert-box radius">
+  <%= flash[type] %>
+  <a href="#" class="close">&times;</a>
+</div>
+<% end %>
 
-am i correctly testing for routes? (or maybe the routes are never hit because of problem above)
 
-why can't i get rack flash (or sinatra flash) to work? i keep getting unintialized constant errors with both.
+    def logged_in?
+      !!current_user
+    end
+
+    def current_user
+      @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    end
