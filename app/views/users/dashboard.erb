@@ -4,16 +4,25 @@
 
 <h3>My Projects</h3>
 
-  <% if @projects %>
-    <% @projects.sort.each do |project| %>
-      <li> <a href="/projects/<%= project.id %>"><%= project.name %></a>
+  <% if @user.projects %>
+    <%  if @user.projects.size == 1 %>
+      <li><a href="/projects/<%= @my_projects[0].id %>"><%= project.name %></a>
+      <br>
+      <br>
+    <% elsif @user.projects.size > 1 %>
+      <% @user.projects.sort.each do |project| %>
+        <li> <a href="/projects/<%= project.id %>"><%= project.name %></a>
+      <% end %>
+    <% else %>
+        <br>
+        <br>
+        <h3> Let's get started! Click the button to create a new project.</h3>
+        <br>
     <% end %>
-  <% else %>
-      <br>
-      <br>
-      <h3> Let's get started! Click the button to create a new project.</h3>
-      <br>
   <% end %>
+
+  <br>
+  <br>
 
 <a href="/projects/new"><input type="submit" value="Create New Project"></a>
 

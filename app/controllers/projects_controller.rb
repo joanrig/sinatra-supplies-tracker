@@ -20,7 +20,6 @@ class ProjectsController < ApplicationController
   post '/projects' do
     @user = Helpers.current_user(session)
     if !Helpers.is_logged_in?(session)
-      binding.pry
       redirect to '/users/login'
     else
       project = Project.create(params)
@@ -29,7 +28,8 @@ class ProjectsController < ApplicationController
         #flash[:message] = "Successfully created project."
         redirect to "/projects/#{project.id}"
       else
-        erb :'/projects/error'
+        #flash[:message] = "Please make sure your project has a name."
+        redirect to '/projects/new'
       end
     end
   end
@@ -68,24 +68,22 @@ class ProjectsController < ApplicationController
     @project = Project.find_by_id(params[:id])
     params.delete(:_method)
     @project.update(params)
-    binding.pry
     @project.save
     redirect to "/projects/#{@project.id}"#{show edited proj}
   end
 
-    delete '/:id' do
-      @user = Helpers.current_user(session)
-      if !Helpers.is_logged_in?(session)
-        redirect to '/login'
-      end
-      @project = Project.find_by_id(params[:id])
-      # if Helpers.current_user(session).id != @project.user_id
-      #   #warning message - you can't delete someone else's proj
-      #   redirect to projects.
-      # end
-      @project.delete
-      redirect to '/projects'
-
+  delete '/:id' do
+    @user = Helpers.current_user(session)
+    if !Helpers.is_logged_in?(session)
+      redirect to '/login'
     end
+    @project = Project.find_by_id(params[:id])
+    # if Helpers.current_user(session).id != @project.user_id
+    #   #warning message - you can't delete someone else's proj
+    #   redirect to projects.
+    # end
+    @project.delete
+    redirect to '/projects'
+  end
 
 end

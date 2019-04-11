@@ -4,11 +4,11 @@ require 'sinatra/base'
 class UsersController < ApplicationController
 
   get "/" do
-    erb :'users/welcome'
+    erb :'users/login'
   end
 
   get "/users" do
-    erb :'users/welcome'
+    erb :'users/login'
   end
 
   get '/users/signup' do
@@ -49,8 +49,6 @@ class UsersController < ApplicationController
     if !Helpers.is_logged_in?(session)
      redirect to '/login'
     else
-      @projects = Project.where(:user_id == @user.id)
-      binding.pry
       erb :'/users/dashboard'
     end
   end
