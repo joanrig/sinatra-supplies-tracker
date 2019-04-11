@@ -1,20 +1,26 @@
 Create a new project
-<form action="" method="post">
+<form action="/projects/new" method="post">
 
-  <label for="name">Name: </label>
-  <input type="text" name="name" placeholder="project name">
+  <label for="name">Name:  </label>
+  <input type="text" name="name" placeholder="project name" required>
+  <br>
 
-  <label for="type">Type: </label>
-  <input type="type" name="type" placeholder="class, party, etc.">
+  <label for="project_type">Type: </label>
+  <input type="text" name="project_type" placeholder="class, party, etc.">
+  <br>
 
-  <label for="date">Date: </label>
-  <input type="date" name="date" placeholder="MM/DD/YY">
 
   <label for="attendees">Attendees: </label>
-  <input type="integer" name="attedees" placeholder="how many attendees will need supplies?">
+  <input type="number" name="attendees" placeholder="number of attendees">
+  <br>
 
-  <label for="supplies_budget">Supplies_Budget: </label>
-  <input type="integer" name="supplies_budget" placeholder="what's the max you will spend on supplies for this project?">
+  <label for="supplies_budget">Supplies Budget: </label>
+  <input type="string" min="0" name="supplies_budget">
+  <br>
+
+  <label for="date">Date: </label>
+  <input type="date" name="date" placeholder="date">
+  <br>
 
   <input type="submit" placeholder="create_project">
 

@@ -7,13 +7,14 @@ class ApplicationController < Sinatra::Base
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
-
     enable :sessions
     set :session_secret, 'password_security'
-    #register Sinatra::Flash
+    register Sinatra::Flash
   end
 
   get "/" do
+    binding.pry
+    flash[:message] = "Hooray, Flash is working!"
     erb :'users/welcome'
   end
 
@@ -22,26 +23,24 @@ class ApplicationController < Sinatra::Base
     erb :'users/welcome'
   end
 
-  get '/users/signup' do #logged in user can't view login page
-    if Helpers.is_logged_in?(session)
-      erb :'/users/dashboard'
-    else
+  get '/users/signup' do
+    # if Helpers.is_logged_in?(session)
+    #   erb :'/users/dashboard'
+    # else
       erb :'/users/signup'
-    end
+    # end
   end
 
   post '/users/signup' do #create user and log them in
-    if params[:name] && params[:email] && params[:password]
-      if params[:email].match(URI::MailTo::EMAIL_REGEXP).present?
-        @user = User.create
-        @user.name = params[:name]
-        @user.email = params[:email]
-        @user.password = params[:password]
-      end
+    if params[:email].match(URI::MailTo::EMAIL_REGEXP).present?
+      @user = User.create(params)
+      session[:user_id] = @user.id
+      @user.save
+      binding.pry
     end
 
     if @user #flash[:message] = "Account successfully created"
-      redirect to '/users/dashboard'
+      erb :'/users/dashboard'
     else #flash[:error] = "Something went wrong. Please try again."
       redirect to '/users/error'
     end
@@ -56,10 +55,10 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/users/login' do
-    user = User.find_by(:email => params["email"])
-
+    user = User.find_by(name: params[:name], email: params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
+      #binding.pry
       redirect to '/users/dashboard'
     else
       #flash[:login_error] = "Incorrect login. Please try again."
@@ -68,6 +67,11 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/users/dashboard' do
+    if !Helpers.is_logged_in?(session)
+     redirect to '/login'
+   end
+   @projects = Project.all
+   @user = Helpers.current_user(session)
     erb :'/users/dashboard'
   end
 

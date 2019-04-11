@@ -4,8 +4,6 @@ require 'sinatra/base'
 class UsersController < ApplicationController
 
 
-  
-
 
 
 end

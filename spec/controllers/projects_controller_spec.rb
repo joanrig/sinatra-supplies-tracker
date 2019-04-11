@@ -4,13 +4,13 @@ def app
   ProjectsController
 end
 
+
 describe 'new action' do
   context 'logged in' do
     it 'lets user view new project form if logged in' do
       user = User.create(:name => "becky567", :email => "starz@aol.com", :password => "kittens")
 
-      visit '/login'
-
+      visit '/users/login'
       fill_in(:name, :with => "becky567")
       fill_in(:password, :with => "kittens")
       click_button 'submit'
@@ -22,7 +22,6 @@ describe 'new action' do
       user = User.create(:name => "becky567", :email => "starz@aol.com", :password => "kittens")
 
       visit '/login'
-
       fill_in(:name, :with => "becky567")
       fill_in(:password, :with => "kittens")
       click_button 'submit'
@@ -32,9 +31,9 @@ describe 'new action' do
       click_button 'submit'
 
       user = User.find_by(:name => "becky567")
-      tweet = Project.find_by(:name => "Super Science Saturday")
+      project = Project.find_by(:name => "Super Science Saturday")
       expect(project).to be_instance_of(Project)
-      expect(project.user_id).to eq(user.id)
+      expect(project.user).to eq(user)
       expect(page.status_code).to eq(200)
     end
 
@@ -42,7 +41,7 @@ describe 'new action' do
       user = User.create(:name => "becky567", :email => "starz@aol.com", :password => "kittens")
       user2 = User.create(:name => "silverstallion", :email => "silver@aol.com", :password => "horses")
 
-     visit '/login'
+     visit '/users/login'
 
       fill_in(:name, :with => "becky567")
       fill_in(:password, :with => "kittens")
@@ -57,14 +56,13 @@ describe 'new action' do
       user2 = User.find_by(:id => user2.id)
       project = Project.find_by(:name => "STEM Day")
       expect(project).to be_instance_of(Project)
-      expect(project.user_id).to eq(project.id)
-      expect(project.user_id).not_to eq(user2.id)
+      # expect(project.id).not_to eq(user2.id)
     end
 
     it 'does not let a user create a blank project' do
       user = User.create(:name => "becky567", :email => "starz@aol.com", :password => "kittens")
 
-      visit '/login'
+      visit '/users/login'
 
       fill_in(:name, :with => "becky567")
       fill_in(:password, :with => "kittens")
@@ -93,7 +91,7 @@ describe 'show action' do
     it 'displays a single project' do
 
       user = User.create(:name => "becky567", :email => "starz@aol.com", :password => "kittens")
-      tweet = Tweet.create(:name => "super duper robotics", :user_id => user.id)
+      project = Project.create(:name => "super duper robotics")
 
       visit '/login'
 
@@ -112,7 +110,7 @@ describe 'show action' do
   context 'logged out' do
     it 'does not let a user view a project if logged out' do
       user = User.create(:name => "becky567", :email => "starz@aol.com", :password => "kittens")
-      tweet = Tweet.create(:name => "super duper robotics", :user_id => user.id)
+      project = Project.create(:name => "super duper robotics")
       get "/projects/#{Project.id}"
       expect(last_response.location).to include("/login")
     end
@@ -123,7 +121,7 @@ describe 'edit action' do
   context "logged in" do
     it 'lets a user view project edit form if they are logged in' do
       user = User.create(:name => "becky567", :email => "starz@aol.com", :password => "kittens")
-      tweet = Tweet.create(:content => "tweeting!", :user_id => user.id)
+      project = Project.create(:name => "Engineering Day")
       visit '/login'
 
       fill_in(:name, :with => "becky567")
@@ -131,20 +129,20 @@ describe 'edit action' do
       click_button 'submit'
       visit '/projects/1/edit'
       expect(page.status_code).to eq(200)
-      expect(page.body).to include(tweet.content)
+      expect(page.body).to include("Engineering day".content)
     end
 
     it 'does not let a user edit a project they did not create' do
-      user1 = User.create(:name => "becky567", :email => "starz@aol.com", :password => "kittens")
-      tweet1 = Project.create(:name => "super duper robotics", :user_id => user1.id)
+      user1 = User.create(:name => "hawking", :email => "hawking@physicist.com", :password => "blackhole")
+      project1 = Project.create(:name => "super duper robotics")
 
-      user2 = User.create(:name => "silverstallion", :email => "silver@aol.com", :password => "horses")
-      tweet2 = Project.create(:name => "Family Reunion", :user_id => user2.id)
+      user2 = User.create(:name => "abe lincoln", :email => "abe@stovepipe.com", :password => "fords")
+      project2 = Project.create(:name => "Family Reunion", :user_id => user2.id)
 
       visit '/login'
 
-      fill_in(:name, :with => "becky567")
-      fill_in(:password, :with => "kittens")
+      fill_in(:name, :with => user1.name)
+      fill_in(:password, :with => )
       click_button 'submit'
       visit "/projects/#{project2.id}/edit"
       expect(page.current_path).to include('/projects')
@@ -198,13 +196,13 @@ describe 'delete action' do
   context "logged in" do
     it 'lets a user delete their own projects if they are logged in' do
       user = User.create(:name => "becky567", :email => "starz@aol.com", :password => "kittens")
-      tweet = Project.create(:name => "Volcanos", :user_id => 1)
+      project = Project.create(:name => "Volcanos", :user_id => 1)
       visit '/login'
 
       fill_in(:name, :with => "becky567")
       fill_in(:password, :with => "kittens")
       click_button 'submit'
-      visit 'tweets/1'
+      visit 'projects/1'
       click_button "Delete Project"
       expect(page.status_code).to eq(200)
       expect(Project.find_by(:name => "Volcanoes")).to eq(nil)
