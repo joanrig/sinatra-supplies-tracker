@@ -17,3 +17,7 @@ flash code for layout.erb
     def current_user
       @current_user ||= User.find(session[:user_id]) if session[:user_id]
     end
+
+
+to do:
+make sure user can only see their projects.

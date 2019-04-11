@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
 
 
   get '/projects/new' do #works
+    #binding.pry
     @user = Helpers.current_user(session)
     if !Helpers.is_logged_in?(session)
       #flash message: please log in to create your new project!
@@ -23,8 +24,9 @@ class ProjectsController < ApplicationController
       redirect to '/users/login'
     else
       project = Project.create(params)
+      project.user_id = @user.id
       if project.save
-        #binding.pry
+        #flash[:message] = "Successfully created project."
         redirect to "/projects/#{project.id}"
       else
         erb :'/projects/error'
@@ -77,8 +79,12 @@ class ProjectsController < ApplicationController
         redirect to '/login'
       end
       @project = Project.find_by_id(params[:id])
-      if Helpers.current_user(session).id != @project.user_id
+      # if Helpers.current_user(session).id != @project.user_id
+      #   #warning message - you can't delete someone else's proj
+      #   redirect to projects.
+      # end
       @project.delete
+      redirect to '/projects'
 
     end
 

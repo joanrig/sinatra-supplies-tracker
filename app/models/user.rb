@@ -4,6 +4,4 @@ class User < ActiveRecord::Base
   validates :name, uniqueness: true
   validates :email, uniqueness: true
   validates :password, presence: true
-
-  #password or pw digest?
 end

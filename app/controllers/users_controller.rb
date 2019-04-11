@@ -37,20 +37,20 @@ class UsersController < ApplicationController
     @user = User.find_by(name: params[:name], email: params[:email])
     if @user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect to '/users/dashboard'
+      redirect to "/users/dashboard/#{@user.id}"
     else
-      #flash[:login_error] = "Incorrect login. Please try again."
+      # flash[:login_error] = "Incorrect login. Please try again."
       redirect to '/users/error'
     end
   end
 
   get '/users/dashboard' do
+    @user = Helpers.current_user(session)
     if !Helpers.is_logged_in?(session)
      redirect to '/login'
     else
-      @projects = Project.all
-      #binding.pry
-      @user = Helpers.current_user(session)
+      @projects = Project.where(:user_id == @user.id)
+      binding.pry
       erb :'/users/dashboard'
     end
   end
