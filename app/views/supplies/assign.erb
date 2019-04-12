@@ -23,7 +23,7 @@
   <% os = @other_supplies %>
   <% if os.size > 1 %>
     <% os.each do |supply| %>
-      <input type="checkbox" id="<%= os.name %>" name="user[project_ids][][supplies]" value="<%= supply.name %>">  <%= supply.name %><br>
+      <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][][supplies]" value="<%= supply.name %>">  <%= supply.name %><br>
     <% end %>
   <% elsif os.size == 1 %>
     <% only = os.first %>

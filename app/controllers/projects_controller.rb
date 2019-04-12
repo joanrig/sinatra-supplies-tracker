@@ -54,6 +54,7 @@ class ProjectsController < ApplicationController
 
     @project = Project.find_by_id(params[:id])
     @project.update(params)
+    @project.save
     erb :'/projects/edit'
   end
 
@@ -63,8 +64,11 @@ class ProjectsController < ApplicationController
 
     @project = Project.find_by_id(params[:id])
     params.delete(:_method)
+    params.delete_if {|key, value| value == "" }#empty spaces won't overwrite old info anymore
+    binding.pry
     @project.update(params)
     @project.save
+
     redirect to "/projects/#{@project.id}"#{show edited proj}
   end
 

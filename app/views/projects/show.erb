@@ -1,21 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#supplies, #projects {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#supplies td, #projects th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#supplies, #projects tr:nth-child(even){background-color: #f2f2f2;}
+
+#supplies tr:hover {background-color: #ddd;}
+
+#supplies th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #4CAF50;
+  color: white;
+}
+
+#projects th {
+  padding-top: 24px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #4CAF50;
+  color: white;
+}
+
+
+</style>
+</head>
+
+
 
 <h1><%= @project.name %></h1>
 <br>
 <br>
-<h3>Type: </h3>
-<h4><%= @project.project_type %></h4>
+<table id="projects">
+  <tr>
+    <th>Type</th>
+    <th>Date</th>
+    <th>Attendees</th>
+    <th>Supplies Budget</th>
+  </tr>
+  <tr>
+    <td><%= @project.project_type %></td>
+    <td><%= @project.date %></td>
+    <td><%= @project.attendees %></td>
+    <td><%= @project.supplies_budget %></td>
+  </tr>
+</table>
 <br>
-<h3>Date: </h3>
-<h4><%= @project.date %></h4>
 <br>
-<h3>Attendees: </h3>
-<h4><%= @project.attendees %></h4>
-<br>
-<h3>Supplies Budget:  </h3>
-<h4><%= @project.supplies_budget %></h4>
 <br>
 
-<table>
+<table id="supplies">
   <tr>
     <th>Name</th>
     <th>Vendor</th>
