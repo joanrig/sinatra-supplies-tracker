@@ -14,10 +14,18 @@ class ProjectsController < ApplicationController
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
 
-    project = Project.create(params)#todo: prevent creation of duplicate projects
-    project.user_id = @user.id
-    if project.save
-      @user.projects << project
+    @found = Project.find_by(name: params[:name].capitalize)
+    binding.pry
+    if @found
+      #flash message - this project already exits, redirecting you to its page
+      redirect to "/projects/#{@found.id}"
+    else
+      @project = Project.create(params)
+    end
+
+    @project.user_id = @user.id
+    if @project.save
+      @user.projects << @project
       #flash[:message] = "Successfully created project."
       redirect to "/projects/#{project.id}"
     else

@@ -125,8 +125,6 @@ class SuppliesController < ApplicationController
       end
     end
 
-    def clean_supplies
-
 
 
 end
