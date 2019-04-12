@@ -1,0 +1,44 @@
+<h1><%= @project.name %></h1>
+
+<form action="/supplies/assign/:id" method="post">
+
+
+<% if !@project.supplies %>
+  <h5>This project doesn't have any supplies yet. Let's add some!</h5>
+<% else %>
+  <h5>Supplies already assigned to this project:</h5>
+  <% @project.supplies.each do |supply| %>
+    <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][][supplies]" value="<%= supply.name %>" checked>
+  <% end %>
+<% end %>
+
+
+
+
+
+<h5>What supplies would you like to add?</h5>
+<h5>Choose from supplies from your other projects:</h5>
+
+<% Project.all.each do |project| %>
+  <% project.supplies.uniq.each do |supply| %>
+    <br>
+    <input type="checkbox" id="<%=supply.name%>" name="user[project_ids][][supplies]" value="<%=supply.name%>">
+    <%= supply.name.capitalize%>
+
+  <% end %>
+<% end %>
+<br>
+<br>
+
+<h5> or create some new supplies:</h5>
+<input type="string" name="supply1[name]" value="supply1 name">
+<br>
+<br>
+<input type="string" name="supply2[name]" value="supply2 name">
+<br>
+<br>
+<input type="string" name="supply3[name]" value="supply3 name">
+<br>
+<br>
+
+</form>

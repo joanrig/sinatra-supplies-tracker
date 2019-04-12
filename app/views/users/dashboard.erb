@@ -1,53 +1,32 @@
-<!-- can't get hello @username to work within erb tags -->
 <h2>Welcome to your dashboard, <%=@user.name%>!</h2>
+<p>Click on any project for more information</p>
 
 
-<h3>My Projects</h3>
-
-  <% if @user.projects %>
-    <%  if @user.projects.size == 1 %>
-      <li><a href="/projects/<%= @my_projects[0].id %>"><%= project.name %></a>
-      <br>
-      <br>
-    <% elsif @user.projects.size > 1 %>
-      <% @user.projects.sort.each do |project| %>
-        <li> <a href="/projects/<%= project.id %>"><%= project.name %></a>
+<h1>My Projects</h1>
+<br>
+  <% if @projects %>
+    <% if @projects.size == 1 %>
+    <ul>
+      <li><a href="/projects/<%= @projects.first.id %>"><%= @projects.first.name %></a></li>
+    </ul>
+    <% elsif @projects.size > 1 %>
+      <% @projects.each do |project| %>
+      <ul>
+        <li><a href="/projects/<%= project.id %>"><%= project.name %></a></li>
+      </ul>
       <% end %>
-    <% else %>
-        <br>
-        <br>
-        <h3> Let's get started! Click the button to create a new project.</h3>
-        <br>
     <% end %>
+  <% else %>
+    <br>
+    <br>
+    <h3> Let's get started! Click the button to create a new project.</h3>
+    <br>
   <% end %>
+  <br>
+  <br>
 
   <a href="/projects/new"><input type="submit" value="Create New Project"></a>
-
-
-  <h3>My Supplies</h3>
-
-    <% if @user.supplies %>
-      <%  if @user.supplies.size == 1 %>
-        <li><a href="/supplies/<%= @user.supplies[0].id %>"><%= supply.name %></a>
-        <br>
-        <br>
-      <% elsif @user.supplies.size > 1 %>
-        <% @user.supplies.sort.each do |supply| %>
-          <li> <a href="/supplies/<%= supply.id %>"><%= supply.name %></a>
-        <% end %>
-      <% else %>
-          <br>
-          <br>
-          <h3> Let's get started! Click the button to create a new supply.</h3>
-          <br>
-      <% end %>
-    <% end %>
-
   <br>
   <br>
-
-
-<a href="/supplies/new"><input type="submit" value="Create New Supply"></a>
-<br>
-<br>
+  <br>
 <a href="/users/logout"><input type="submit" value="Log Out"></a>

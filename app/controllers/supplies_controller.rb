@@ -84,4 +84,14 @@ class SuppliesController < ApplicationController
     redirect to '/supplies'
   end
 
+  get '/supplies/assign/:id' do
+    @user = Helpers.current_user(session)
+    if !Helpers.is_logged_in?(session)
+      redirect to '/login'
+    end
+    @project = Project.find_by_id(params[:id])
+    erb :'/supplies/assign'
+  end
+
+
 end

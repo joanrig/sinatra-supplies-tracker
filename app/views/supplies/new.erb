@@ -5,29 +5,29 @@ Create a new supply
   <input id="hidden" type="hidden" name="_method" value="patch">
 
     <h3><label for="name">Name:</label></h3>
-    <input type="string" name="name" placeholder="name">
+    <input type="string" name="name" id="name" placeholder="supply name">
 
     <h3><label for="vendor">Vendor:</label></h3>
-    <input type="string" name="vendor" placeholder="vendor">
+    <input type="string" name="vendor" id="vendor" placeholder="vendor name">
     <br>
 
     <h3><label for="website">Website:</label></h3>
-    <input type="string" name="website" placeholder="website">
+    <input type="string" name="website" id="website" placeholder="http// ...">
     <br>
 
     <h3><label for="unit type">Unit type:</label></h3>
-    <input type="string" name="unit_type" placeholder="unit type">
+    <input type="string" name="unit_type" id="unit type" placeholder="1 gallon, box of 12, etc">
     <br>
 
-    <h3><label for="unit type">Price per unit:</label></h3>
-    <input type="decimal" name="price_per_unit" placeholder="price_per_unit">
+    <h3><label for="price per unit">Price per unit:</label></h3>
+    <input type="number" min="0.00" max="10000.00" step="1.00" name="price_per_unit" id="price per unit">
     <br>
 
-    <h3><label for="unit type">Units needed:</label></h3>
-    <input type="integer" name="units_needed" placeholder="units needed">
+    <h3><label for="units needed">Units needed:</label></h3>
+    <input type="integer" name="units_needed" id="unit needed>
     <br>
 
-    <input type="submit" placeholder="Update Supply">
+    <input type="submit" placeholder="Create this Supply">
 
 
 </form>

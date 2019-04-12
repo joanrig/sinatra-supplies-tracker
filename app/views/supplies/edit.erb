@@ -5,34 +5,34 @@
   <input id="hidden" type="hidden" name="_method" value="patch">
 
     <h1><label for="name"><%= @supply.name %></label></h1>
-    <input type="string" name="name" placeholder="update name">
+    <input type="string" name="name" id="name" placeholder="update supply name">
 
     <h3><label for="vendor">Vendor:</label></h3>
     <h4><%= @supply.vendor %></h4>
-    <input type="string" name="vendor" placeholder="update vendor">
+    <input type="string" name="vendor" id="vendor" placeholder="update vendor name">
     <br>
 
     <h3><label for="website">Website:</label></h3>
     <h4><%= @supply.website %></h4>
-    <input type="string" name="website" placeholder="update website">
+    <input type="string" name="website" id="website"placeholder="update website">
     <br>
 
     <h3><label for="unit type">Unit type:</label></h3>
     <h4><%= @supply.unit_type %></h4>
-    <input type="string" name="unit_type" placeholder="update unit type">
+    <input type="string" name="unit_type" id="unit type"placeholder="update unit type">
     <br>
 
     <h3><label for="price per unit">Price per unit:</label></h3>
     <h4><%= @project.price_per_unit %></h4>
-      <input type="decimal" name="price_per_unit" placeholder="update price_per_unit">
+      <input type="number" min="0.00" max="10000.00" step="0.01" name="price_per_unit" id="price per unit" placeholder="update price">
     <br>
 
     <h3><label for="units needed">Units needed:</label></h3>
     <h4><%= @project.units_needed %></h4>
-    <input type="integer" name="units_needed" placeholder="update units needed">
+    <input type="integer" name="units_needed" id="units needed" placeholder="update units needed">
     <br>
 
-    <input type="submit" placeholder="Update Project">
+    <input type="submit" placeholder="Update">
 
   <br>
   <br>

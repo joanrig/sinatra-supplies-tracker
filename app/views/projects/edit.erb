@@ -8,21 +8,21 @@
 
     <h3><label for="Type"></label>Type:</h3>
     <h4><%= @project.project_type %></h4>
-    <input type="text" name="project_type" placeholder="update_project_type">
+    <input type="text" name="project_type" id="project type" placeholder="update_project_type">
     <br>
 
     <h3><label for="Date"></label>Date:</h3>
     <h4><%= @project.date %></h4>
-    <input type="date" name="date" placeholder="new_date">
+    <input type="date" name="date" id="date"placeholder="new_date">
     <br>
 
     <h3><label for="Attendees"></label>Attendees:</h3>
     <h4><%= @project.attendees %></h4>
-    <input type="integer" name="attendees" placeholder="update number of attendees">
+    <input type="integer" name="attendees" id="attendees" placeholder="update number of attendees">
     <br>
 
     <h3><label for="Supplies Budget"></label>Supplies Budget:</h3>
-    <input type="integer" name="supplies_budget" placeholder="update supplies budget">
+    <input type="number" min="0.00" max="10000.00" step="1.00" name="supplies_budget" id="supplies budget" placeholder="update supplies budget">
     <h4><%= @project.date %></h4>
     <br>
 

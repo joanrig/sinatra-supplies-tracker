@@ -1,6 +1,8 @@
 
 
 <h1><%= @project.name %></h1>
+<br>
+<br>
 <h3>Type: </h3>
 <h4><%= @project.project_type %></h4>
 <br>
@@ -11,10 +13,12 @@
 <h4><%= @project.attendees %></h4>
 <br>
 <h3>Supplies Budget:  </h3>
-<h4><%= @project.date %></h4>
+<h4><%= @project.supplies_budget %></h4>
 <br>
 
 <a href="/projects/<%= @project.id %>/edit"><input type="submit" value="Edit"></a>
+
+<a href="/supplies/assign/<%= @project.id %>"><input type="submit" value="Add Supplies"></a>
 
 <br>
 <br>
