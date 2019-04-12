@@ -12,5 +12,9 @@ class ApplicationController < Sinatra::Base
     #register Sinatra::Flash
   end
 
+  get "/" do
+    erb :'users/login'
+  end
+
 
 end

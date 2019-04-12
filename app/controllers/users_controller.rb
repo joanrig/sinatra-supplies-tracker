@@ -3,10 +3,6 @@ require 'sinatra/base'
 
 class UsersController < ApplicationController
 
-  get "/" do
-    erb :'users/login'
-  end
-
   get "/users" do
     erb :'users/login'
   end
@@ -16,9 +12,8 @@ class UsersController < ApplicationController
   end
 
   post '/users/signup' do #create user and log them in
-    @user = User.create(params)
+    @user = User.create(params)#todo: check if user already exists
     session[:user_id] = @user.id
-    binding.pry
     if @user #flash[:message] = "Account successfully created"
       erb :'/users/dashboard'
     else #flash[:error] = "Something went wrong. Please try again."
