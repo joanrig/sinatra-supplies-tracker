@@ -5,11 +5,15 @@
 
 
 <% if !@project.supplies %>
-  <h5>This project doesn't have any supplies yet. Let's add some!</h5>
+  <p>This project doesn't have any supplies yet. Let's add some!</p>
 <% else %>
+<br>
+<br>
   <p>Supplies already assigned to this project:</p>
-  <% @project.supplies.uniq.each do |supply| %>
-    <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][][supplies]" value="<%= supply.name %>" checked>  <%= supply.name %><br>
+  <% @current_project_supplies.each do |supply| %>
+    <% if supply.name %>
+      <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][][supplies]" value="<%= supply.name %>" checked>  <%= supply.name %><br>
+    <% end %>
   <% end %>
 <% end %>
 
@@ -19,15 +23,11 @@
 
 
 <p>Would you like to add any of these supplies from your other projects?</p>
-
-<% @user.projects.each do |project| %>
-  <% project.supplies.uniq.each do |supply| %>
+  <% @other_supplies.each do |supply| %>
     <br>
     <input type="checkbox" id="<%=supply.name%>" name="user[project_ids][][supplies]" value="<%=supply.name%>">
-    <%= supply.name.capitalize%>
-
+    <%= supply.name%>
   <% end %>
-<% end %>
 <br>
 <br>
 

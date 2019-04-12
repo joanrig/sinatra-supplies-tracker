@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     session[:user_id] = @user.id
     binding.pry
     if @user #flash[:message] = "Account successfully created"
-      redirect to '/users/dashboard'
+      erb :'/users/dashboard'
     else #flash[:error] = "Something went wrong. Please try again."
       redirect to '/users/login'
     end
@@ -36,6 +36,7 @@ class UsersController < ApplicationController
 
   post '/users/login' do
     #binding.pry
+    session.clear
     @user = User.find_by(email: params[:email])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
@@ -46,6 +47,7 @@ class UsersController < ApplicationController
       redirect to '/users/error'
     end
   end
+
 
 
   get '/users/logout' do

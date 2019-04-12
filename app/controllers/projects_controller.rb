@@ -6,9 +6,6 @@ class ProjectsController < ApplicationController
   get '/projects/new' do #works
     @user = Helpers.current_user(session)
     if !Helpers.is_logged_in?(session)
-
-      #flash message: please log in to create your new project!
-      #binding.pry
       redirect to '/users/login'
     else
       #binding.pry
