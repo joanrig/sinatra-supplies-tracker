@@ -93,5 +93,13 @@ class SuppliesController < ApplicationController
     erb :'/supplies/assign'
   end
 
+  post '/supplies/assign/:id' do
+    params.delete(:id)
+    params.values.each do |supply|
+      Supply.find_or_create_by(name: supply.values)
+      binding.pry
+    end
+  end
+
 
 end

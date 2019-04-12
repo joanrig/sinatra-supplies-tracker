@@ -16,6 +16,28 @@
 <h4><%= @project.supplies_budget %></h4>
 <br>
 
+<% Project.first.supplies.each do |supply| %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Vendor</th>
+      <th>Website</th>
+      <th>Unit type</th>
+      <th>Price per unit</th>
+      <th>Units needed</th>
+    </tr>
+    <tr>
+      <td><%= supply.name %></td>
+      <td><%= supply.vendor %></td>
+      <td><%= supply.website %></td>
+      <td><%= supply.unit_type %></td>
+      <td><%= supply.price_per_unit %></td>
+      <td><%= supply.units_needed %></td>
+    </tr>
+
+  </table>
+<% end %>
+
 <a href="/projects/<%= @project.id %>/edit"><input type="submit" value="Edit"></a>
 
 <a href="/supplies/assign/<%= @project.id %>"><input type="submit" value="Add Supplies"></a>

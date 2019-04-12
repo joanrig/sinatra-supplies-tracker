@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   post '/users/signup' do #create user and log them in
     @user = User.create(params)
     session[:user_id] = @user.id
-    #binding.pry
+    binding.pry
     if @user #flash[:message] = "Account successfully created"
       erb :'/users/dashboard'
     else #flash[:error] = "Something went wrong. Please try again."

@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
 
 
   get '/projects/new' do #works
-    #binding.pry
+    binding.pry
     @user = Helpers.current_user(session)
     if !Helpers.is_logged_in?(session)
 
