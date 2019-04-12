@@ -89,6 +89,7 @@ class SuppliesController < ApplicationController
     if !Helpers.is_logged_in?(session)
       redirect to '/login'
     end
+    #binding.pry
     @project = Project.find_by_id(params[:id])
     erb :'/supplies/assign'
   end
@@ -103,6 +104,7 @@ class SuppliesController < ApplicationController
     @project.supplies << supply1
     @project.supplies << supply2
     @project.supplies << supply3
+    redirect to "supplies/assign/#{@project.id}"
   end
 
 

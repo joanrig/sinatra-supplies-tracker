@@ -8,8 +8,8 @@
   <h5>This project doesn't have any supplies yet. Let's add some!</h5>
 <% else %>
   <p>Supplies already assigned to this project:</p>
-  <% @project.supplies.each do |supply| %>
-    <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][][supplies]" value="<%= supply.name %>" checked>
+  <% @project.supplies.uniq.each do |supply| %>
+    <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][][supplies]" value="<%= supply.name %>" checked>  <%= supply.name %><br>
   <% end %>
 <% end %>
 
