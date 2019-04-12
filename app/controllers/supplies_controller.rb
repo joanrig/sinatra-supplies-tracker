@@ -20,10 +20,17 @@ class SuppliesController < ApplicationController
     if !Helpers.is_logged_in?(session)
       redirect to '/users/login'
     else
-      supply = Supply.create(params)
-      #supply.user_id = @user.id
-      if supply.save
-        supply.name.capitalize
+      @found = Supply.find_by(name: params[:name].capitalize)
+      binding.pry
+      if @found
+        #flash message - this supply already exits, redirecting you to its page
+        redirect to "/supplies/#{@found.id}"
+      else
+        @supply = Supply.create(params)
+      end
+
+      if @supply.save
+        @supply.name.capitalize
         #flash[:message] = "Successfully created supply."
         redirect to "/supplies/#{supply.id}"
       else
@@ -94,7 +101,7 @@ class SuppliesController < ApplicationController
       project.supplies.uniq.each do |supply|
         @all_my_supplies << supply
         @other_supplies = @all_my_supplies - @current_project_supplies
-    binding.pry
+    #binding.pry
       end
     end
     erb :'/supplies/assign'
@@ -104,16 +111,29 @@ class SuppliesController < ApplicationController
     #cannot get iteration to work, see attempts in notes
     @project = Project.find_by(name: params[:project_name])
 
-#create names from text fields
-    supply1 = Supply.find_or_create_by(name: params[:supply1][:name].capitalize)
-    supply2 = Supply.find_or_create_by(name: params[:supply1][:name].capitalize)
-    supply3 = Supply.find_or_create_by(name: params[:supply1][:name].capitalize)
+# => create from  assign form's text fields
+    supply1 = Supply.find_or_create_by(name: params[:supply1][:name]
+    supply2 = Supply.find_or_create_by(name: params[:supply2][:name]
+    supply3 = Supply.find_or_create_by(name: params[:supply3][:name]
+    binding.pry
 
-    @project.supplies << supply1
-    @project.supplies << supply2
-    @project.supplies << supply3
-    redirect to "supplies/assign/#{@project.id}"
+    project = @project
+    supplies = []
+    supplies.push (supply1, supply2, supply3)
+    add_supplies_to_project(project, supplies)
+    redirect to "projects/#{@project.id}"
+
   end
+
+  ######### local helpers ############
+
+    def add_supplies_to_project(project, supplies)
+      supplies.each do |supply|
+        supply.name.capitalize
+        project.supplies << supply unless project.supplies.include?(supply)
+      end
+
+    end
 
 
 end

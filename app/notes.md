@@ -21,3 +21,5 @@ flash code for layout.erb
 
     # params.values.first.values.each do |supply|
     #   Supply.find_or_create_by(name: supply.values.first)
+
+    unless Supply.any? {|supply| supply.name == params[:name].capitalize}
