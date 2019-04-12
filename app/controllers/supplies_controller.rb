@@ -94,11 +94,26 @@ class SuppliesController < ApplicationController
   end
 
   post '/supplies/assign/:id' do
+    @project = Project.find_by_id("#{:id}")
     params.delete(:id)
-    params.values.each do |supply|
-      Supply.find_or_create_by(name: supply.values)
+    binding.pry
+
+    #create from write-in part of form
+    if params.values.size > 1
+      params.values.each do |supply|
+        @supplies_from_text = Supply.find_or_create_by(name: supply.values.first)
+      end
       binding.pry
+    elsif params.values.size == 1
+      @supplies_from_text = Supply.find_or_create_by(name: params.values.first.values.first)
     end
+
+
+
+      # #add to proj supplies
+      # @supplies_from_write_ins.each do |supply|
+      #   @project.supplies << supply
+      # end
   end
 
 
