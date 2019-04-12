@@ -152,7 +152,7 @@ describe ApplicationController do
       fill_in(:name, :with => "becky567")
       fill_in(:password, :with => "kittens")
       click_button 'submit'
-      expect(page.current_path).to eq('/users/dashboard')
+      expect(page.current_path).to eq('users/dashboard')
     end
   end
 

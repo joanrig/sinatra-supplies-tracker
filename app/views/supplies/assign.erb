@@ -1,7 +1,7 @@
 <h1><%= @project.name %></h1>
 
-<!-- :id is project.id -->
 <form action="/supplies/assign/:id" method="post">
+
 
 
 <% if !@project.supplies %>
@@ -32,6 +32,7 @@
 <br>
 
 <h5> or create some new supplies:</h5>
+<input type="hidden" name="project_name" value="<%=@project.name%>">
 <input type="string"  name="[supply1][name]">
 <br>
 <br>

@@ -43,7 +43,7 @@ class SuppliesController < ApplicationController
     if @supply
       erb :"/supplies/show"
     else
-      redirect to '/users/dashboard'
+      redirect to 'users/dashboard/:id'
     end
   end
 
@@ -94,26 +94,15 @@ class SuppliesController < ApplicationController
   end
 
   post '/supplies/assign/:id' do
-    @project = Project.find_by_id("#{:id}")
-    params.delete(:id)
-    binding.pry
+    #cannot get iteration to work, see attempts in notes
+    @project = Project.find_by(name: params[:project_name])
+    supply1 = Supply.find_or_create_by(name: params[:supply1][:name])
+    supply2 = Supply.find_or_create_by(name: params[:supply1][:name])
+    supply3 = Supply.find_or_create_by(name: params[:supply1][:name])
 
-    #create from write-in part of form
-    if params.values.size > 1
-      params.values.each do |supply|
-        @supplies_from_text = Supply.find_or_create_by(name: supply.values.first)
-      end
-      binding.pry
-    elsif params.values.size == 1
-      @supplies_from_text = Supply.find_or_create_by(name: params.values.first.values.first)
-    end
-
-
-
-      # #add to proj supplies
-      # @supplies_from_write_ins.each do |supply|
-      #   @project.supplies << supply
-      # end
+    @project.supplies << supply1
+    @project.supplies << supply2
+    @project.supplies << supply3
   end
 
 

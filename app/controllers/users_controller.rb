@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     session[:user_id] = @user.id
     binding.pry
     if @user #flash[:message] = "Account successfully created"
-      erb :'/users/dashboard'
+      redirect to '/users/dashboard'
     else #flash[:error] = "Something went wrong. Please try again."
       redirect to '/users/login'
     end
@@ -35,27 +35,18 @@ class UsersController < ApplicationController
   end
 
   post '/users/login' do
-    @user = User.find_by(name: params[:name], email: params[:email])
-    if @user && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      redirect to "/users/dashboard/#{@user.id}"
+    #binding.pry
+    @user = User.find_by(email: params[:email])
+    if @user && @user.authenticate(params[:password])
+      session[:user_id] = @user.id
+      @projects = @user.projects
+      erb :"/users/dashboard"
     else
       # flash[:login_error] = "Incorrect login. Please try again."
       redirect to '/users/error'
     end
   end
 
-  get '/users/dashboard' do
-    @user = Helpers.current_user(session)
-    @projects = @user.projects
-    #@types = @projects.map {|project| project.project_type}.uniq
-
-    if !Helpers.is_logged_in?(session)
-     redirect to '/login'
-    else
-      erb :'/users/dashboard'
-    end
-  end
 
   get '/users/logout' do
     if Helpers.is_logged_in?(session)
