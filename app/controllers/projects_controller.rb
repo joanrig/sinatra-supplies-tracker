@@ -15,7 +15,6 @@ class ProjectsController < ApplicationController
     Helpers.must_login(session)
 
     @found = Project.find_by(name: params[:name].capitalize)
-    binding.pry
     if @found
       #flash message - this project already exits, redirecting you to its page
       redirect to "/projects/#{@found.id}"
@@ -27,7 +26,7 @@ class ProjectsController < ApplicationController
     if @project.save
       @user.projects << @project
       #flash[:message] = "Successfully created project."
-      redirect to "/projects/#{project.id}"
+      redirect to "/projects/#{@project.id}"
     else
       #flash[:message] = "Please make sure your project has a name."
       redirect to '/projects/new'

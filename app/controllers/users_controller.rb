@@ -43,6 +43,16 @@ class UsersController < ApplicationController
     end
   end
 
+  get '/users/dashboard/:id' do
+    @user = Helpers.current_user(session)
+    Helpers.must_login(session)
+
+    @projects = @user.projects
+    #@types = @projects.map {|project| project.project_type}.uniq
+    erb :'/users/dashboard'
+  end
+
+
 
 
   get '/users/logout' do

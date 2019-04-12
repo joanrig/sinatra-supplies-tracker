@@ -1,0 +1,15 @@
+<%= @user.name %>'s Supplies
+
+<br>
+<br>
+<p>Click on any supply for more information</p>
+<br>
+<a href="/users/dashboard/<%= @user.id %>">To see supplies listed by project, click here.</a>
+
+
+<% @my_supplies.each do |supply| %>
+<ul>
+  <a href="supplies/<%= supply.id %>">supply.name</a>
+<% end %>
+
+<ul>

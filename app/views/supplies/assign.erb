@@ -4,35 +4,38 @@
 
 
 
-<% if !@project.supplies %>
-  <p>This project doesn't have any supplies yet. Let's add some!</p>
-<% else %>
+<p>Supplies already assigned to this project:</p>
+<% cps = @current_project_supplies %>
+<% if cps.size > 1 %>
+  <% cps.each do |supply| %>
+    <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][][supplies]" value="<%= supply.name %>" checked>  <%= supply.name %><br>
+  <% end %>
+<% elsif cps.size == 1 %>
+    <% only = cps.first %>
+    <input type="checkbox" id="<%= only.name %>" name="user[project_ids][][supplies]" value="<%= only.name %>" checked>  <%= only.name %><br>
+<% end %>
+
+
 <br>
 <br>
-  <p>Supplies already assigned to this project:</p>
-  <% @current_project_supplies.each do |supply| %>
-    <% if supply.name %>
-      <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][][supplies]" value="<%= supply.name %>" checked>  <%= supply.name %><br>
+<p>Would you like to add any of these supplies from your other projects?</p>
+<% if @other_supplies %>
+  <% os = @other_supplies %>
+  <% if os.size > 1 %>
+    <% os.each do |supply| %>
+      <input type="checkbox" id="<%= os.name %>" name="user[project_ids][][supplies]" value="<%= supply.name %>">  <%= supply.name %><br>
     <% end %>
+  <% elsif os.size == 1 %>
+    <% only = os.first %>
+    <input type="checkbox" id="<%= only.name %>" name="user[project_ids][][supplies]" value="<%= only.name %>" checked>  <%= only.name %><br>
   <% end %>
 <% end %>
 
 <br>
 <br>
 
-
-
-<p>Would you like to add any of these supplies from your other projects?</p>
-  <% @other_supplies.each do |supply| %>
-    <br>
-    <input type="checkbox" id="<%=supply.name%>" name="user[project_ids][][supplies]" value="<%=supply.name%>">
-    <%= supply.name%>
-  <% end %>
-<br>
-<br>
-
 <h5> or create some new supplies:</h5>
-<input type="hidden" name="project_name" value="<%=@project.name%>">
+<input type="hidden" name="project_name" value="<%= @project.name %>">
 <input type="string"  name="[supply1][name]">
 <br>
 <br>
@@ -46,3 +49,6 @@
 <input type="submit" value="assign">
 
 </form>
+<br>
+<br>
+<a href="/users/dashboard/<%= @user.id %>">Click here to return to your dashboard</a>

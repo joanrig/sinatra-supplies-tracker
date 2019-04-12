@@ -3,6 +3,18 @@ require 'sinatra/base'
 
 class SuppliesController < ApplicationController
 
+  get '/supplies' do
+    @user = Helpers.current_user(session)
+    Helpers.must_login(session)
+
+    @supplies = Supply.all
+    @my_supplies = []
+    @user.projects.each do |project|
+      @my_supplies << @project.supplies
+    end
+    erb :'/supplies/index'
+  end
+
   get '/supplies/new' do #works
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
@@ -16,7 +28,6 @@ class SuppliesController < ApplicationController
     Helpers.must_login(session)
 
     @found = Supply.find_by(name: params[:name].capitalize)
-    binding.pry
     if @found
       #flash message - this supply already exits, redirecting you to its page
       redirect to "/supplies/#{@found.id}"
@@ -105,21 +116,21 @@ class SuppliesController < ApplicationController
     supply1 = Supply.find_or_create_by(name: params[:supply1][:name])
     supply2 = Supply.find_or_create_by(name: params[:supply2][:name])
     supply3 = Supply.find_or_create_by(name: params[:supply3][:name])
-    binding.pry
 
     project = @project
     supplies = []
     supplies.push(supply1, supply2, supply3)
     add_supplies_to_project(project, supplies)
-    redirect to "projects/#{@project.id}"
+    redirect to "supplies/assign/#{@project.id}"
   end
 
   ######### local helpers ############
 
     def add_supplies_to_project(project, supplies)
+      binding.pry
       supplies.each do |supply|
         if supply.name
-          supply.capitalize
+          supply.name.capitalize
           project.supplies << supply unless project.supplies.include?(supply)
         end
       end

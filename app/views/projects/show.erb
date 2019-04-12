@@ -1,5 +1,4 @@
 
-
 <h1><%= @project.name %></h1>
 <br>
 <br>
@@ -16,16 +15,18 @@
 <h4><%= @project.supplies_budget %></h4>
 <br>
 
-<% Project.first.supplies.each do |supply| %>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Vendor</th>
-      <th>Website</th>
-      <th>Unit type</th>
-      <th>Price per unit</th>
-      <th>Units needed</th>
-    </tr>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Vendor</th>
+    <th>Website</th>
+    <th>Unit type</th>
+    <th>Price per unit</th>
+    <th>Units needed</th>
+  </tr>
+
+  <% if @project.supplies.size > 1 %>
+    <% @project.supplies.each do |supply| %>
     <tr>
       <td><%= supply.name %></td>
       <td><%= supply.vendor %></td>
@@ -34,9 +35,21 @@
       <td><%= supply.price_per_unit %></td>
       <td><%= supply.units_needed %></td>
     </tr>
+    <% end %>
+  <% end %>
 
+  <% if @project.supplies == 1 %>
+    <% only = @project.supplies.first %>
+    <tr>
+      <td><%= only.name %></td>
+      <td><%= only.vendor %></td>
+      <td><%= only.website %></td>
+      <td><%= only.unit_type %></td>
+      <td><%= only.price_per_unit %></td>
+      <td><%= only.units_needed %></td>
+    </tr>
+  <% end %>
   </table>
-<% end %>
 
 <a href="/projects/<%= @project.id %>/edit"><input type="submit" value="Edit"></a>
 
