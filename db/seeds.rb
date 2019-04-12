@@ -53,48 +53,48 @@ Project.create!([{
 Supply.destroy_all
 Supply.create!([{
   name: "glue",
-  supplier: "Amazon",
-  supplier_link: "http://www.amazon.com",
+  vendor: "Amazon",
+  website: "http://www.amazon.com",
   unit_type: "gallon",
   price_per_unit: 5.50,
   units_needed: 5
 },
 {
   name: "PVC",
-  supplier: "Home Depot",
-  supplier_link: "http://www.homedepot.com",
+  vendor: "Home Depot",
+  website: "http://www.homedepot.com",
   unit_type: "6 feet",
   price_per_unit: 4.59,
   units_needed: 1
 },
 {
   name: "paint",
-  supplier: "Michaels",
-  supplier_link: "http://www.michaels.com",
+  vendor: "Michaels",
+  website: "http://www.michaels.com",
   unit_type: "box of 12",
   price_per_unit: 19.95,
   units_needed: 1
 },
 {
   name: "clay",
-  supplier: "Amazon",
-  supplier_link: "http://www.amazon.com",
+  vendor: "Amazon",
+  website: "http://www.amazon.com",
   unit_type: "20 pounds",
   price_per_unit: 39.95,
   units_needed: 2
 },
 {
   name: "lab glasses",
-  supplier: "Amazon",
-  supplier_link: "http://www.amazon.com",
+  vendor: "Amazon",
+  website: "http://www.amazon.com",
   unit_type: "box of 12",
   price_per_unit: 19.95,
   units_needed: 1
 },
 {
   name: "food coloring",
-  supplier: "local grocery",
-  supplier_link: "",
+  vendor: "local grocery",
+  website: "",
   unit_type: "box of 4",
   price_per_unit: 3.95,
   units_needed: 4

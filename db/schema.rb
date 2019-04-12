@@ -29,13 +29,11 @@ ActiveRecord::Schema.define(version: 20190410005034) do
 
   create_table "supplies", force: :cascade do |t|
     t.string  "name"
-    t.string  "supplier"
-    t.string  "supplier_link"
+    t.string  "vendor"
+    t.string  "website"
     t.string  "unit_type"
     t.decimal "price_per_unit"
     t.integer "units_needed"
-    t.integer "project_id"
-    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|

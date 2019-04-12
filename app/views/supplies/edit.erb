@@ -1,0 +1,41 @@
+<h2>Edit your list of supplies</h2>
+
+
+<form action="/supplies/<%=@supply.id%>" method="post">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+
+    <h1><label for="name"><%= @supply.name %></label></h1>
+    <input type="string" name="name" placeholder="update name">
+
+    <h3><label for="vendor">Vendor:</label></h3>
+    <h4><%= @supply.vendor %></h4>
+    <input type="string" name="vendor" placeholder="update vendor">
+    <br>
+
+    <h3><label for="website">Website:</label></h3>
+    <h4><%= @supply.website %></h4>
+    <input type="string" name="website" placeholder="update website">
+    <br>
+
+    <h3><label for="unit type">Unit type:</label></h3>
+    <h4><%= @supply.unit_type %></h4>
+    <input type="string" name="unit_type" placeholder="update unit type">
+    <br>
+
+    <h3><label for="price per unit">Price per unit:</label></h3>
+    <h4><%= @project.price_per_unit %></h4>
+      <input type="decimal" name="price_per_unit" placeholder="update price_per_unit">
+    <br>
+
+    <h3><label for="units needed">Units needed:</label></h3>
+    <h4><%= @project.units_needed %></h4>
+    <input type="integer" name="units_needed" placeholder="update units needed">
+    <br>
+
+    <input type="submit" placeholder="Update Project">
+
+  <br>
+  <br>
+  <br>
+  <a href="/users/logout"><input type="submit" value="Log Out"></a>
+</form>

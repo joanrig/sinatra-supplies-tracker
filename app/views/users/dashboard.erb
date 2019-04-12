@@ -21,10 +21,33 @@
     <% end %>
   <% end %>
 
+  <a href="/projects/new"><input type="submit" value="Create New Project"></a>
+
+
+  <h3>My Supplies</h3>
+
+    <% if @user.supplies %>
+      <%  if @user.supplies.size == 1 %>
+        <li><a href="/supplies/<%= @user.supplies[0].id %>"><%= supply.name %></a>
+        <br>
+        <br>
+      <% elsif @user.supplies.size > 1 %>
+        <% @user.supplies.sort.each do |supply| %>
+          <li> <a href="/supplies/<%= supply.id %>"><%= supply.name %></a>
+        <% end %>
+      <% else %>
+          <br>
+          <br>
+          <h3> Let's get started! Click the button to create a new supply.</h3>
+          <br>
+      <% end %>
+    <% end %>
+
   <br>
   <br>
 
-<a href="/projects/new"><input type="submit" value="Create New Project"></a>
 
+<a href="/supplies/new"><input type="submit" value="Create New Supply"></a>
+<br>
 <br>
 <a href="/users/logout"><input type="submit" value="Log Out"></a>

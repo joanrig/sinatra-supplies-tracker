@@ -1,0 +1,33 @@
+Create a new supply
+<form action="/supplies" method="post">
+
+<form action="/supplies/<%=@supply.id%>" method="post">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+
+    <h3><label for="name">Name:</label></h3>
+    <input type="string" name="name" placeholder="name">
+
+    <h3><label for="vendor">Vendor:</label></h3>
+    <input type="string" name="vendor" placeholder="vendor">
+    <br>
+
+    <h3><label for="website">Website:</label></h3>
+    <input type="string" name="website" placeholder="website">
+    <br>
+
+    <h3><label for="unit type">Unit type:</label></h3>
+    <input type="string" name="unit_type" placeholder="unit type">
+    <br>
+
+    <h3><label for="unit type">Price per unit:</label></h3>
+    <input type="decimal" name="price_per_unit" placeholder="price_per_unit">
+    <br>
+
+    <h3><label for="unit type">Units needed:</label></h3>
+    <input type="integer" name="units_needed" placeholder="units needed">
+    <br>
+
+    <input type="submit" placeholder="Update Supply">
+
+
+</form>
