@@ -23,3 +23,31 @@ flash code for layout.erb
     #   Supply.find_or_create_by(name: supply.values.first)
 
     unless Supply.any? {|supply| supply.name == params[:name].capitalize}
+
+    <th><a href="/projects/<%= @project.id %>">Edit Project Info</a></th>
+
+    <th><a href="/supplies/assign/<%= @project.id %>">Update Supplies</a></th>
+    <th><form action="/projects/<%= @project.id %>" method="post">
+      <input id="hidden" type="hidden" name="_method" value="patch">
+    </form><a href="/projects/<%= @project.id %>">Delete Project</a></th>
+    <th><a href="/users/dashboard/<%= @project.id %>">Dashboard</a></th>
+
+
+    navbar doesn't know what project is on edit show page:
+
+    <table id="navbar">
+      <tr>
+        <% binding.pry %>
+        <th><a href="/projects/<%= @project.id %>">Edit Project Info</a></th>
+        <th><a href="/supplies/assign/<%= @project.id %>">Update Supplies</a></th>
+        <th><form action="/projects/<%= @project.id %>" method="post">
+          <input id="hidden" type="hidden" name="_method" value="patch">
+        </form><a href="/projects/<%= @project.id %>">Delete Project</a></th>
+        <th><a href="/users/dashboard/<%= @project.id %>">Dashboard</a></th>
+        <th><a href="href="/users/logout">Log Out</a></th>
+      </tr>
+      </table>
+
+    <br>
+    <br>
+    <br>

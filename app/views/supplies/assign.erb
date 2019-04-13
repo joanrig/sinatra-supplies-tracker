@@ -23,7 +23,6 @@
 <table id="navbar">
   <tr>
     <th><h2>Project Supplies</h2><th>
-    <th><a href="users/dashboard/<%= @user.id %>">Dashboard</a></th>
     <th><a href="href="/users/logout">Log Out</a></th>
   </tr>
   </table>
@@ -33,10 +32,6 @@
 <br>
 
 <h1><%= @project.name.capitalize %></h1>
-
-
-
-
 
 
 <p>Supplies already assigned to this project (fix so you can uncheck to remove):</p>
@@ -71,16 +66,15 @@
 <br>
 
 <h5> or create some new supplies:</h5>
-<form action="/supplies/assign/:id" method="post">
-
-  <input type="hidden" name="name" value="<%= @project.name %>">
-  <input type="string"  name="[supply][1][name]">
+<form action="/supplies/show/project/<%= @project.id %>" method="post">
+  <input type="hidden" name="[:id]" value="<%= @project.id %>">
+  <input type="string"  name="supply1_name">
   <br>
   <br>
-  <input type="string" name="[supply[2][name]">
+  <input type="string" name="supply2_name">
   <br>
   <br>
-  <input type="string" name="[supply[3][name]">
+  <input type="string" name="supply3_name">
   <br>
   <br>
 

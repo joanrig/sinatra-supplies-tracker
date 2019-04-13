@@ -49,8 +49,8 @@ class SuppliesController < ApplicationController
       #flash[:message] = "Please make sure your supply has a name."
       redirect to '/supplies/new'
     end
-
   end
+
 
   get '/supplies/:id' do #get show page with edit button
     @user = Helpers.current_user(session)
@@ -74,7 +74,7 @@ class SuppliesController < ApplicationController
     erb :'/supplies/edit'
   end
 
-  patch '/:id' do#update supply
+  patch '/supplies/:id' do#update supply
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
 
@@ -88,7 +88,7 @@ class SuppliesController < ApplicationController
   delete '/:id' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
-
+binding.
     Supply.find_by_id(params[:id]).delete
     # if Helpers.current_user(session).id != @supply.user_id
     #   #warning message - you can't delete someone else's supplies
@@ -97,16 +97,10 @@ class SuppliesController < ApplicationController
     redirect to '/supplies'
   end
 
-  get '/supplies/assign/:id' do
-    @user = Helpers.current_user(session)
-    @project = Project.find_by_id(params[:id])
-    erb :'/supplies/assign'
-  end
-
-  post '/supplies/assign/:id' do
+  post '/supplies/show/project/:id' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
-    @project = Project.find_by(name: params[:name])
+    @project = Project.find_by(id: params[:id])
 
     if @project
       @current = @project.supplies.uniq
@@ -124,29 +118,45 @@ class SuppliesController < ApplicationController
       end
       @other = @all + @current - @current
     end
+    binding.pry
 
-# => from text fields/ line 75 assign.erb
-binding.pry
-    supply1 = Supply.find_or_create_by(name: params[:supply1][:name])
-    supply2 = Supply.find_or_create_by(name: params[:supply1][:name])
-    supply3 = Supply.find_or_create_by(name: params[:supply1][:name])
+    # => from text fields
 
-  binding.pry
+    supply1 = Supply.find_or_create_by(name: params.values[1]) if params.values[1]
+    supply2 = Supply.find_or_create_by(name: params.values[2]) if params.values[2]
+    supply3 = Supply.find_or_create_by(name: params.values[3]) if params.values[3]
+
+    binding.pry
     project = @project
     supplies = []
     supplies.push(supply1, supply2, supply3)
+    binding.pry
     add_supplies_to_project(project, supplies)
-    redirect to "supplies/assign/#{@project.id}"
+    erb :'supplies/assign'
   end
+
+
+
+  # get '/supplies/show/project/:id' do
+  #   binding.pry
+  #   @user = Helpers.current_user(session)
+  #   Helpers.must_login(session)
+  #   @project = Project.find_by(id: params[:id])
+  #   erb :'/supplies/assign'
+  # end
+
+
+
 
   ######### local helpers ############
 
   def add_supplies_to_project(project, supplies)
-    binding.pry
-    supplies.each do |supply|
-      if supply.name
-        supply.name.capitalize
-        project.supplies << supply unless project.supplies.include?(supply)
+    if supplies && project
+      supplies.each do |supply|
+        if supply
+          supply.name.capitalize
+          project.supplies << supply unless project.supplies.include?(supply)
+        end
       end
     end
   end

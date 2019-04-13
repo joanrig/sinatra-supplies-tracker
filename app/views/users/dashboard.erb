@@ -1,3 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  <style>
+
+#navbar {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#navbar th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #fff;
+  color: white;
+}
+
+</style>
+</head>
+<body>
+
+<% if @project %>
+  <table id="navbar">
+    <tr>
+      <th><a href="/supplies/assign/<%= @project.id %>">Update Supplies</a></th>
+      <th><form action="/projects/<%= @project.id %>" method="post">
+        <input id="hidden" type="hidden" name="_method" value="patch">
+      </form><a href="/projects/<%= @project.id %>">Delete Project</a></th>
+      <th><a href="/users/dashboard/<%= @project.id %>">Dashboard</a></th>
+      <th><a href="href="/users/logout">Log Out</a></th>
+    </tr>
+    </table>
+<% else %>
+<table id="navbar">
+  <% binding.pry %>
+  <tr>
+    <th><a href="href="/users/logout">Log Out</a></th>
+  </tr>
+  </table>
+<% end %>
+
+<br>
+<br>
+<br>
+
+
 <h2>Welcome to your dashboard, <%=@user.name%>!</h2>
 <p>Click on any project for more information</p>
 
@@ -29,4 +79,4 @@
   <br>
   <br>
   <br>
-<a href="/users/logout"><input type="submit" value="Log Out"></a>
+  </body>

@@ -58,19 +58,7 @@
 
 </style>
 </head>
-<table id="navbar">
-  <tr>
-    <th><a href="/projects/<%= @project.id %>/edit">Edit Project Info</a></th>
-    <th><a href="/supplies/assign/<%= @project.id %>">Update Supplies</a></th>
-    <th><a href="/projects/<%= @project.id %>/delete">Delete Project</a></th>
-    <th><a href="users/dashboard/<%= @project.id %>">Dashboard</a></th>
-    <th><a href="href="/users/logout">Log Out</a></th>
-  </tr>
-  </table>
 
-<br>
-<br>
-<br>
 
 
 <h1>Project: <%= @project.name.capitalize %></h1>
@@ -93,6 +81,14 @@
 <br>
 
 <h1>Supplies</h1>
+<br>
+<form action="/supplies/show/project/<%= @project.id %>" method="post">
+  <input type="submit" value= "Update Supplies">
+</form>
+
+<br>
+<br>
+<br>
 <table id="supplies">
   <tr>
     <th>Name</th>
@@ -128,3 +124,7 @@
     </tr>
   <% end %>
   </table>
+  <br>
+  <br>
+  <br>
+  <br>

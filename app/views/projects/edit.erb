@@ -1,7 +1,7 @@
 <h2>Edit your project.</h2>
 <p> Fill in the fields you'd like to update.</p>
 
-<form action="/projects/<%=@project.id%>" method="post">
+<form action="<%=@project.id%>" method="post">
   <input id="hidden" type="hidden" name="_method" value="patch">
     <h1><%= @project.name %></h1>
     <input type="text" name="name" placeholder="update name">

@@ -11,13 +11,21 @@ class UsersController < ApplicationController
     erb :'/users/signup'
   end
 
-  post '/users/signup' do #create user and log them in
-    @user = User.create(params)#todo: check if user already exists
-    session[:user_id] = @user.id
-    if @user #flash[:message] = "Account successfully created"
-      erb :'/users/dashboard'
-    else #flash[:error] = "Something went wrong. Please try again."
-      redirect to '/users/login'
+  post '/users/signup' do
+    binding.pry
+    if User.find_by(email: params[:email])
+      #flash[:message] = "This email address already has an account. Please log in."
+      redirect to "/users/login"
+    else
+      @user = User.new(params)
+      binding.pry
+      if @user.save #flash[:message] = "Account successfully created"
+        session[:user_id] = @user.id
+        erb :'/users/dashboard'
+      else
+        #flash[:error] = "Something went wrong. Please try again."
+        redirect to '/users/login'
+      end
     end
   end
 
@@ -43,6 +51,15 @@ class UsersController < ApplicationController
     end
   end
 
+  get '/users/logout' do
+    if Helpers.is_logged_in?(session)
+      session.clear
+      redirect to '/users/login'
+    else
+      redirect to '/users/goodbye'
+    end
+  end
+
   get '/users/dashboard/:id' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
@@ -50,18 +67,6 @@ class UsersController < ApplicationController
     @projects = @user.projects
     #@types = @projects.map {|project| project.project_type}.uniq
     erb :'/users/dashboard'
-  end
-
-
-
-
-  get '/users/logout' do
-    if Helpers.is_logged_in?(session)
-      session.clear
-      redirect to '/users/login'
-    else
-      redirect to '/'
-    end
   end
 
 
