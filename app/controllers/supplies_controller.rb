@@ -7,10 +7,16 @@ class SuppliesController < ApplicationController
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
 
-    @supplies = Supply.all
+    @supplies = Supply.all.map {|supply| supply.delete if supply.name = ""}
     @my_supplies = []
-    @user.projects.each do |project|
-      @my_supplies << @project.supplies
+    if @user.projects.size > 1
+      @user.projects.each do |project|
+        @my_supplies << project.supplies if project.supplies
+        @my_supplies = @my_supplies.flatten
+        binding.pry
+      end
+    elsif user.projects.size == 1
+      @my_supplies << @user.projects.first.supplies if @user.projects.first.supplies
     end
     erb :'/supplies/index'
   end
@@ -46,10 +52,10 @@ class SuppliesController < ApplicationController
 
   end
 
-
   get '/supplies/:id' do #get show page with edit button
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
+    binding.pry
 
     @supply = Supply.find_by_id(params[:id])
     if @supply
@@ -59,7 +65,7 @@ class SuppliesController < ApplicationController
     end
   end
 
-  get '/supplies/:id/edit' do#get edit page
+  get '/supplies/:id/edit' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
 
@@ -93,30 +99,39 @@ class SuppliesController < ApplicationController
 
   get '/supplies/assign/:id' do
     @user = Helpers.current_user(session)
-    Helpers.must_login(session)
-
     @project = Project.find_by_id(params[:id])
-    @current_project_supplies = @project.supplies.uniq
-    @all_my_supplies = []
-    @user.projects.each do |project|
-      project.supplies.uniq.each do |supply|
-        @all_my_supplies << supply
-        @other_supplies = @all_my_supplies - @current_project_supplies
-    #binding.pry
-      end
-    end
     erb :'/supplies/assign'
   end
 
   post '/supplies/assign/:id' do
+    @user = Helpers.current_user(session)
     Helpers.must_login(session)
-    @project = Project.find_by(name: params[:project_name])
+    @project = Project.find_by(name: params[:name])
 
-# => create from  assign form's text fields/ see pirate ships lab
+    if @project
+      @current = @project.supplies.uniq
+      @all = []
+      @user.projects.each do |project|
+        if project.supplies
+          if project.supplies.size > 1
+            project.supplies.uniq.each do |supply|
+              @all << supply
+            end
+          elsif project.supplies.size == 1
+            @all << project.supplies.first
+          end
+        end
+      end
+      @other = @all + @current - @current
+    end
+
+# => from text fields/ line 75 assign.erb
+binding.pry
     supply1 = Supply.find_or_create_by(name: params[:supply1][:name])
-    supply2 = Supply.find_or_create_by(name: params[:supply2][:name])
-    supply3 = Supply.find_or_create_by(name: params[:supply3][:name])
+    supply2 = Supply.find_or_create_by(name: params[:supply1][:name])
+    supply3 = Supply.find_or_create_by(name: params[:supply1][:name])
 
+  binding.pry
     project = @project
     supplies = []
     supplies.push(supply1, supply2, supply3)
@@ -126,15 +141,15 @@ class SuppliesController < ApplicationController
 
   ######### local helpers ############
 
-    def add_supplies_to_project(project, supplies)
-      binding.pry
-      supplies.each do |supply|
-        if supply.name
-          supply.name.capitalize
-          project.supplies << supply unless project.supplies.include?(supply)
-        end
+  def add_supplies_to_project(project, supplies)
+    binding.pry
+    supplies.each do |supply|
+      if supply.name
+        supply.name.capitalize
+        project.supplies << supply unless project.supplies.include?(supply)
       end
     end
+  end
 
 
 

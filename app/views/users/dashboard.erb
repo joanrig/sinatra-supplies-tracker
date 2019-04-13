@@ -7,12 +7,12 @@
   <% if @projects %>
     <% if @projects.size == 1 %>
     <ul>
-      <li><a href="/projects/<%= @projects.first.id %>"><%= @projects.first.name %></a></li>
+      <li><a href="/projects/<%= @projects.first.id %>"><%= @projects.first.name.capitalize %></a></li>
     </ul>
     <% elsif @projects.size > 1 %>
       <% @projects.each do |project| %>
       <ul>
-        <li><a href="/projects/<%= project.id %>"><%= project.name %></a></li>
+        <li><a href="/projects/<%= project.id %>"><%= project.name.capitalize %></a></li>
       </ul>
       <% end %>
     <% end %>

@@ -4,12 +4,21 @@
 <br>
 <p>Click on any supply for more information</p>
 <br>
-<a href="/users/dashboard/<%= @user.id %>">To see supplies listed by project, click here.</a>
 
 
-<% @my_supplies.each do |supply| %>
-<ul>
-  <a href="supplies/<%= supply.id %>">supply.name</a>
+
+<% if @my_supplies.size > 1 %>
+  <% @my_supplies.each do |supply| %>
+  <ul>
+    <li><a href="supplies/<% supply.id %>"><%= supply.name %></a></li>
+  <% end %>
+  </ul>
+<% elsif @my_supplies.size == 1 %>
+  <ul>
+    <li><a href="supplies/<%= @my_supplies.first.id %>">@my_supplies.first.name</a></li>
+  </ul>
 <% end %>
 
-<ul>
+<br>
+<br>
+<a href="/users/dashboard/<%= @user.id %>">To see supplies listed by project, click here.</a>

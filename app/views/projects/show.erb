@@ -10,7 +10,7 @@
 
 #supplies td, #projects th {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
 }
 
 #supplies, #projects tr:nth-child(even){background-color: #f2f2f2;}
@@ -29,19 +29,51 @@
   padding-top: 24px;
   padding-bottom: 12px;
   text-align: center;
-  background-color: #4CAF50;
+  background-color: #4c97af;
+  color: white;
+}
+
+#projects td {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  text-align: center;
+  background-color: #def0f2;
+  color: black;
+}
+
+#navbar {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#navbar th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #fff;
   color: white;
 }
 
 
 </style>
 </head>
+<table id="navbar">
+  <tr>
+    <th><a href="/projects/<%= @project.id %>/edit">Edit Project Info</a></th>
+    <th><a href="/supplies/assign/<%= @project.id %>">Update Supplies</a></th>
+    <th><a href="/projects/<%= @project.id %>/delete">Delete Project</a></th>
+    <th><a href="users/dashboard/<%= @project.id %>">Dashboard</a></th>
+    <th><a href="href="/users/logout">Log Out</a></th>
+  </tr>
+  </table>
 
-
-
-<h1><%= @project.name %></h1>
 <br>
 <br>
+<br>
+
+
+<h1>Project: <%= @project.name.capitalize %></h1>
 <table id="projects">
   <tr>
     <th>Type</th>
@@ -60,6 +92,7 @@
 <br>
 <br>
 
+<h1>Supplies</h1>
 <table id="supplies">
   <tr>
     <th>Name</th>
@@ -73,7 +106,7 @@
   <% if @project.supplies.size > 1 %>
     <% @project.supplies.each do |supply| %>
     <tr>
-      <td><%= supply.name %></td>
+      <td><%= supply.name %></a></td>
       <td><%= supply.vendor %></td>
       <td><%= supply.website %></td>
       <td><%= supply.unit_type %></td>
@@ -95,17 +128,3 @@
     </tr>
   <% end %>
   </table>
-
-<a href="/projects/<%= @project.id %>/edit"><input type="submit" value="Edit"></a>
-
-<a href="/supplies/assign/<%= @project.id %>"><input type="submit" value="Add Supplies"></a>
-
-<br>
-<br>
-<a href="/projects/<%= @project.id %>/delete"><input type="submit" value="Delete Project"></a>
-<br>
-<br>
-<a href="users/dashboard"><input type="submit" value="Back to my dashboard"></a>
-
-
-<a href="/users/logout"><input type="submit" value="Log Out"></a>
