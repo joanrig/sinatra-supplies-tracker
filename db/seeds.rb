@@ -42,12 +42,12 @@ Project.create!([{
   user_id: "2"
 },
 {
-  name: "Crime Scene",
+  name: "Tardis Launch",
   project_type: "party",
   date: "July 11, 2019",
-  attendees: "12",
-  supplies_budget: "40",
-  user_id: "1"
+  attendees: "1000",
+  supplies_budget: "45000",
+  user_id: "4"
 }])
 
 Supply.destroy_all
@@ -84,7 +84,7 @@ Supply.create!([{
   units_needed: 2
 },
 {
-  name: "lab glasses",
+  name: "sonic screwdriver",
   vendor: "Amazon",
   website: "http://www.amazon.com",
   unit_type: "box of 12",
@@ -141,22 +141,12 @@ User.create!([{
   password: "password"
 },
 {
-  name: "Will",
-  email: "will@whale.com",
-  password: "password"
-},
-{
   name: "Frances",
   email: "frances_h@mom_of_two.com",
   password: "password"
 },
 {
-  name: "Natalia",
-  email: "natalia_g@hero.com",
-  password: "password"
-},
-{
-  name: "Angela",
-  email: "sissy@boss.com",
-  password: "password"
+  name: "Dr. Who",
+  email: "who@who",
+  password: "test"
 }])

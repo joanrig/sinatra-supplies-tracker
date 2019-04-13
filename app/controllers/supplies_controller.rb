@@ -101,30 +101,23 @@ binding.
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
     @project = Project.find_by(id: params[:id])
+    user = @user
 
+      #should be a module, need part of it in dashboard erb
     if @project
       @current = @project.supplies.uniq
-      @all = []
-      @user.projects.each do |project|
-        if project.supplies
-          if project.supplies.size > 1
-            project.supplies.uniq.each do |supply|
-              @all << supply
-            end
-          elsif project.supplies.size == 1
-            @all << project.supplies.first
-          end
-        end
+      Helpers.all_supplies(user)#should return @all
+      if @other && @all && @current
+        @other = @all + @current - @current
       end
-      @other = @all + @current - @current
     end
+
 
     # => from text fields
     new = params.values[1..3]
     new.each do |value|
       if value != ""
         @project.supplies << Supply.find_or_create_by(name: value)
-        binding.pry
       end
     end
     erb :'supplies/assign'

@@ -63,7 +63,6 @@ class UsersController < ApplicationController
     Helpers.must_login(session)
 
     @projects = @user.projects
-    #@types = @projects.map {|project| project.project_type}.uniq
     erb :'/users/dashboard'
   end
 
