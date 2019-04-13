@@ -118,49 +118,17 @@ binding.
       end
       @other = @all + @current - @current
     end
-    binding.pry
 
     # => from text fields
-
-    supply1 = Supply.find_or_create_by(name: params.values[1]) if params.values[1]
-    supply2 = Supply.find_or_create_by(name: params.values[2]) if params.values[2]
-    supply3 = Supply.find_or_create_by(name: params.values[3]) if params.values[3]
-
-    binding.pry
-    project = @project
-    supplies = []
-    supplies.push(supply1, supply2, supply3)
-    binding.pry
-    add_supplies_to_project(project, supplies)
-    erb :'supplies/assign'
-  end
-
-
-
-  # get '/supplies/show/project/:id' do
-  #   binding.pry
-  #   @user = Helpers.current_user(session)
-  #   Helpers.must_login(session)
-  #   @project = Project.find_by(id: params[:id])
-  #   erb :'/supplies/assign'
-  # end
-
-
-
-
-  ######### local helpers ############
-
-  def add_supplies_to_project(project, supplies)
-    if supplies && project
-      supplies.each do |supply|
-        if supply
-          supply.name.capitalize
-          project.supplies << supply unless project.supplies.include?(supply)
-        end
+    new = params.values[1..3]
+    new.each do |value|
+      if value != ""
+        @project.supplies << Supply.find_or_create_by(name: value)
+        binding.pry
       end
     end
+    erb :'supplies/assign'
   end
-
 
 
 end

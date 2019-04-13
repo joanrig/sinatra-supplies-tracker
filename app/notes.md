@@ -19,19 +19,18 @@ flash code for layout.erb
     end
 
 
-    # params.values.first.values.each do |supply|
-    #   Supply.find_or_create_by(name: supply.values.first)
 
-    unless Supply.any? {|supply| supply.name == params[:name].capitalize}
 
-    <th><a href="/projects/<%= @project.id %>">Edit Project Info</a></th>
-
-    <th><a href="/supplies/assign/<%= @project.id %>">Update Supplies</a></th>
-    <th><form action="/projects/<%= @project.id %>" method="post">
-      <input id="hidden" type="hidden" name="_method" value="patch">
-    </form><a href="/projects/<%= @project.id %>">Delete Project</a></th>
+    <a href="/projects/<%= @project.id %>">Delete Project</a></th>
     <th><a href="/users/dashboard/<%= @project.id %>">Dashboard</a></th>
 
+    # get '/supplies/show/project/:id' do
+    #   binding.pry
+    #   @user = Helpers.current_user(session)
+    #   Helpers.must_login(session)
+    #   @project = Project.find_by(id: params[:id])
+    #   erb :'/supplies/assign'
+    # end
 
     navbar doesn't know what project is on edit show page:
 
