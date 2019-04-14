@@ -1,7 +1,7 @@
 to ask:
 
 
-flash code for layout.erb
+
 <% flash.keys.each do |type| %>
 <div data-alert class="flash <%= type %> alert-box radius">
   <%= flash[type] %>

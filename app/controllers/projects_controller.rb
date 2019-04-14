@@ -13,12 +13,11 @@ class ProjectsController < ApplicationController
   post '/projects' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
-    binding.pry
     p = params[:name].split.map(&:capitalize).join(' ')
 
     @found = Project.find_by(name: p)
     if @found
-      #flash message - this project already exits, redirecting you to its page
+      flash[:message] = "This project already exits, redirecting you to its page."
       redirect to "/projects/#{@found.id}"
     else
       params.delete("_method")
@@ -29,11 +28,8 @@ class ProjectsController < ApplicationController
     @project.user_id = @user.id
     if @project.save
       @user.projects << @project
-      #flash[:message] = "Successfully created project."
+      flash[:message] = "Successfully created project."
       redirect to "/projects/#{@project.id}"
-    else
-      #flash[:message] = "Please make sure your project has a name."
-      redirect to '/projects/new'
     end
   end
 
@@ -53,7 +49,6 @@ class ProjectsController < ApplicationController
   get '/projects/:id/edit' do#get edit page
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
-
     @project = Project.find_by_id(params[:id])
     erb :'/projects/edit'
   end
@@ -74,11 +69,10 @@ class ProjectsController < ApplicationController
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
     @project = Project.find_by_id(params[:id])
-    binding.pry
 
     if @project.user.id == @user.id
       @project.destroy
-      #flash message - successfully deleted
+      flash[:message] = "Project successfully deleted."
     end
     redirect to "/users/dashboard/#{@user.id}"
   end
