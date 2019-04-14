@@ -58,6 +58,7 @@ class ProjectsController < ApplicationController
     erb :'/projects/edit'
   end
 
+
   patch '/:id' do#update project
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
@@ -70,14 +71,11 @@ class ProjectsController < ApplicationController
     redirect to "/projects/#{@project.id}"#{show edited proj}
   end
 
-  delete 'projects/:id' do
-    binding.pry
+  post 'projects/:id/delete' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
-    @project = Project.find_by_id(params[:id])
-        binding.pry
-    @project.delete
-    redirect to '/projects'
+    Project.find(params[:id]).delete
+    redirect to "/users/dashboard/#{@user.id}"
   end
 
 end

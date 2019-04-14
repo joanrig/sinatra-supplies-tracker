@@ -24,7 +24,7 @@ flash code for layout.erb
     <a href="/projects/<%= @project.id %>">Delete Project</a></th>
     <th><a href="/users/dashboard/<%= @project.id %>">Dashboard</a></th>
 
-    # get '/supplies/show/project/:id' do
+    # get '/supplies/assign/project/:id' do
     #   binding.pry
     #   @user = Helpers.current_user(session)
     #   Helpers.must_login(session)

@@ -15,7 +15,7 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
-  background-color: #fff;
+  background-color: #bdddaa;
   color: white;
 }
 
@@ -23,34 +23,23 @@
 </head>
 <body>
 
-<% if @project %>
-  <table id="navbar">
-    <tr>
-      <th><a href="/supplies/assign/<%= @project.id %>">Update Supplies</a></th>
-      <th><form action="/projects/<%= @project.id %>" method="post">
-        <input id="hidden" type="hidden" name="_method" value="patch">
-      </form><a href="/projects/<%= @project.id %>">Delete Project</a></th>
-      <th><a href="/users/dashboard/<%= @project.id %>">Dashboard</a></th>
-      <th><a href="href="/users/logout">Log Out</a></th>
-    </tr>
-    </table>
-<% else %>
+
 <table id="navbar">
   <tr>
-    <th><a href="href="/users/logout">Log Out</a></th>
+    <th><a href="/users/dashboard/<%= @user.id %>">Dashboard</a>
+    <th><a a href="/users/logout">Log Out</a></th>
   </tr>
   </table>
-<% end %>
+
 
 <br>
 <br>
 <br>
-
 
 <h2>Welcome to your dashboard, <%=@user.name%>!</h2>
 <p>Click on any project for more information</p>
 
-
+<br>
 <h1>My Projects</h1>
 <br>
   <%if @projects %>
@@ -58,7 +47,6 @@
     <ul>
       <li><a href="/projects/<%= @projects.first.id %>"><%= @projects.first.name.capitalize %></a></li>
     </ul>
-    <% binding.pry %>
     <% elsif @projects.size > 1 %>
       <% @projects.each do |project| %>
       <ul>
@@ -75,23 +63,17 @@
   <br>
   <br>
   <br>
-  </body>
 
   <h1>My Supplies</h1>
   <br>
 
-  <% @user.projects.each do |project| %>
-    <% s = project.supplies %>
-    <% s.each do |supply| %>
-      <%= supply.name %>
-      <br>
+    <% @user.projects.each do |project| %>
+      <% s = project.supplies %>
+      <% s.uniq.each do |supply| %>
+        <a href="/supplies/<%= supply.id %>"><%= supply.name %></a>
+        <br>
+      <% end %>
     <% end %>
-  <% end %>
-
-
-
-
-
 
     <br>
     <br>
@@ -99,4 +81,5 @@
     <br>
     <br>
     <br>
-    </body>
+
+  </body>

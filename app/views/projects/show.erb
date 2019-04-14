@@ -18,7 +18,7 @@
 #supplies tr:hover {background-color: #ddd;}
 
 #supplies th {
-  padding-top: 12px;
+  padding-top: 24px;
   padding-bottom: 12px;
   text-align: center;
   background-color: #4CAF50;
@@ -51,7 +51,7 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
-  background-color: #fff;
+  background-color: #bdddaa;
   color: white;
 }
 
@@ -59,9 +59,29 @@
 </style>
 </head>
 
+<table id="navbar">
+  <tr>
+    <th><a href="/users/dashboard/<%= @user.id %>">Dashboard</a>
+    <th><a a href="/users/logout">Log Out</a></th>
+  </tr>
+  </table>
+
+<br>
+<br>
 
 
 <h1>Project: <%= @project.name.capitalize %></h1>
+<br>
+<a href="/projects/<%= @project.id %>/edit"
+  "><input type="submit" value= "Update Project"></a>
+  <form  action="/projects/<%= @project.id %>" method="delete">
+
+  </form>
+  <a href="/projects/<%= @project.id %>/edit"
+    "><input type="submit" value= "Delete Project"></a>
+<br>
+<br>
+
 <table id="projects">
   <tr>
     <th>Type</th>
@@ -82,12 +102,9 @@
 
 <h1>Supplies</h1>
 <br>
-<form action="/supplies/show/project/<%= @project.id %>" method="post">
+<form action="/supplies/assign/project/<%= @project.id %>" method="post">
   <input type="submit" value= "Update Supplies">
 </form>
-
-<br>
-<br>
 <br>
 <table id="supplies">
   <tr>
@@ -100,11 +117,11 @@
   </tr>
 
   <% if @project.supplies.size > 1 %>
-    <% @project.supplies.each do |supply| %>
+    <% @project.supplies.uniq.each do |supply| %>
     <tr>
-      <td><%= supply.name %></a></td>
+      <td><a href="/supplies/<%= supply.id %>"><%= supply.name %></a></td>
       <td><%= supply.vendor %></td>
-      <td><%= supply.website %></td>
+      <td><a href="<%= supply.website %>"><%= supply.website %></a></td>
       <td><%= supply.unit_type %></td>
       <td><%= supply.price_per_unit %></td>
       <td><%= supply.units_needed %></td>
@@ -115,9 +132,9 @@
   <% if @project.supplies == 1 %>
     <% only = @project.supplies.first %>
     <tr>
-      <td><%= only.name %></td>
+      <td><a href="/supplies/<%= only.id %>"><%= only.name %></a></td>
       <td><%= only.vendor %></td>
-      <td><%= only.website %></td>
+      <td><a href="<%= only.website %>"></a><%= only.website %></td>
       <td><%= only.unit_type %></td>
       <td><%= only.price_per_unit %></td>
       <td><%= only.units_needed %></td>

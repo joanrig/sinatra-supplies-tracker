@@ -31,8 +31,7 @@ class SuppliesController < ApplicationController
   post '/supplies' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
-binding.pry
-    @found = Supply.find_by(name: params[:name].capitalize)
+    @found = Supply.find_by(name: params[:name])
     binding.pry
     if @found
       #flash message - this supply already exits, redirecting you to its page
@@ -97,7 +96,7 @@ binding.
     redirect to '/supplies'
   end
 
-  post '/supplies/show/project/:id' do
+  post '/supplies/assign/project/:id' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
     @project = Project.find_by(id: params[:id])
@@ -112,8 +111,9 @@ binding.
           @all << supply
         end
       end
-      
+
     if @other && @all && @current
+      binding.pry
       @other = @all + @current - @current
     end
   end

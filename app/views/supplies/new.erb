@@ -2,7 +2,7 @@
 <form action="/supplies" method="post">
 
     <h3><label for="name">Name:</label></h3>
-    <input type="string" name="name" id="name" placeholder="supply name">
+    <input type="string" name="name" id="name" placeholder="supply name" required>
 
     <h3><label for="vendor">Vendor:</label></h3>
     <input type="string" name="vendor" id="vendor" placeholder="vendor name">
@@ -20,9 +20,6 @@
     <input type="number" min="0.00" max="10000.00" step="1.00" name="price_per_unit" id="price per unit">
     <br>
 
-    <h3><label for="units needed">Units needed:</label></h3>
-    <input type="number" name="units_needed" id="unit needed">
-    <br>
     <br>
     <br>
 

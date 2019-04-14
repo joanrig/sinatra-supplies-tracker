@@ -1,7 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#supplies, #projects {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#supplies td, #projects th {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+#supplies, #projects tr:nth-child(even){background-color: #f2f2f2;}
+
+#supplies tr:hover {background-color: #ddd;}
+
+#supplies th {
+  padding-top: 24px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #4CAF50;
+  color: white;
+}
+
+#projects th {
+  padding-top: 24px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #4c97af;
+  color: white;
+}
+
+#projects td {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  text-align: center;
+  background-color: #def0f2;
+  color: black;
+}
+
+#navbar {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#navbar th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #bdddaa;
+  color: white;
+}
+
+
+</style>
+</head>
+
+<body>
+
+  <table id="navbar">
+    <tr>
+      <th><a href="/users/dashboard/<%= @user.id %>">Dashboard</a>
+      <th><a a href="/users/logout">Log Out</a></th>
+    </tr>
+    </table>
+
+<br>
+<br>
 <h2>Edit your project.</h2>
 <p> Fill in the fields you'd like to update.</p>
 
-<form action="<%=@project.id%>" method="post">
+<form action="/projects/<%=@project.id%>" method="post">
   <input id="hidden" type="hidden" name="_method" value="patch">
     <h1><%= @project.name %></h1>
     <input type="text" name="name" placeholder="update name">
@@ -22,7 +94,7 @@
     <br>
 
     <h3><label for="Supplies Budget"></label>Supplies Budget:</h3>
-    <input type="number" min="0.00" max="10000.00" step="1.00" name="supplies_budget" id="supplies budget" placeholder="update supplies budget">
+    <input type="number" min="0.00" max="10000.00" step="1.00" name="supplies_budget" id="supplies budget">
     <h4><%= @project.date %></h4>
     <br>
 
@@ -32,3 +104,5 @@
   <br>
 
 </form>
+
+</body>

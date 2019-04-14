@@ -22,12 +22,12 @@
 </head>
 <table id="navbar">
   <tr>
-    <th><h2>Project Supplies</h2><th>
-    <th><a href="/users/dashboard/<%= @user.id %>">Dashboard</a></th>
-    <th><a href="/users/logout">Log Out</a></th>
+    <th><a href="/users/dashboard/<%= @user.id %>">Dashboard</a>
+    <th><a a href="/users/logout">Log Out</a></th>
   </tr>
   </table>
 
+<h2>Project Supplies</h2>
 <br>
 <br>
 <br>
@@ -39,12 +39,10 @@
 <% if @current %>
   <% if @current.size > 1 %>
     <% @current.each do |supply| %>
-      <% supply.delete if !supply.name %>
       <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][][supplies]" value="<%= supply.name %>" checked>  <%= supply.name %><br>
     <% end %>
   <% elsif @current.size == 1 %>
-      <% only = @current.first %>
-      <input type="checkbox" id="<%= only.name %>" name="user[project_ids][][supplies]" value="<%= only.name %>" checked>  <%= only.name %><br>
+      <input type="checkbox" id="<%= @current.first.name %>" name="user[project_ids][][supplies]" value="<%= @current.first.name %>" checked>  <%= @current.first.name %><br>
   <% end %>
 <% end %>
 
@@ -67,7 +65,7 @@
 <br>
 
 <h5> or create some new supplies:</h5>
-<form action="/supplies/show/project/<%= @project.id %>" method="post">
+<form action="/supplies/assign/project/<%= @project.id %>" method="post">
   <input type="hidden" name="[:id]" value="<%= @project.id %>">
   <input type="string"  name="supply1_name">
   <br>
