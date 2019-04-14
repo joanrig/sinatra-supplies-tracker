@@ -1,3 +1,34 @@
+<<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+#navbar {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#navbar th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #469ad6;
+  color: white;
+}
+
+
+</style>
+</head>
+<body>
+<table id="navbar">
+  <tr>
+    <th><a href="/users/dashboard/<%= @user.id %>">Dashboard</a>
+    <th><a a href="/users/logout">Log Out</a></th>
+  </tr>
+  </table>
+
+<br>
 
 
 <h1><%= @supply.name %></h1>
@@ -21,4 +52,4 @@
 
 <a href="/supplies/<%= @supply.id %>/edit"><input type="submit" value="Edit this Supply"></a>
 
-<a href="/users/dashboard/<%= @user.id %>"><input type="submit" value="Back to Dashboard"></a>
+</body>

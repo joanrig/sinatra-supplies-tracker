@@ -10,8 +10,8 @@
 }
 
 #navbar th {
-  padding-top: 24px;
-  padding-bottom: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
   text-align: center;
   background-color: #469ad6;
   color: white;
@@ -27,8 +27,8 @@
   </tr>
   </table>
 
-<h2>Project Supplies</h2>
 <br>
+<h2>Project Supplies</h2>
 <br>
 <br>
 
@@ -50,6 +50,7 @@
 <br>
 <br>
 <p>Would you like to add any of these supplies from your other projects?</p>
+<% binding.pry %>
 <% if @other %>
   <% if @other.size > 1 %>
     <% @other.each do |supply| %>

@@ -1,4 +1,37 @@
-<h2>Edit your list of supplies</h2>
+<<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+#navbar {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#navbar th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #469ad6;
+  color: white;
+}
+
+
+</style>
+</head>
+<body>
+<table id="navbar">
+  <tr>
+    <th><a href="/users/dashboard/<%= @user.id %>">Dashboard</a>
+    <th><a a href="/users/logout">Log Out</a></th>
+  </tr>
+  </table>
+
+<br>
+
+
+h2>Edit your list of supplies</h2>
 
 
 <form action="/supplies/<%=@supply.id%>" method="post">
@@ -41,3 +74,4 @@
   <br>
   <br>
 </form>
+</body>
