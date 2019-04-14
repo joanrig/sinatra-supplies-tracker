@@ -52,17 +52,17 @@ class SuppliesController < ApplicationController
   end
 
 
-  # get '/supplies/:id' do #get show page with edit button
-  #   @user = Helpers.current_user(session)
-  #   Helpers.must_login(session)
-  #
-  #   @supply = Supply.find_by_id(params[:id])
-  #   if @supply
-  #     erb :"/supplies/show"
-  #   else
-  #     redirect to 'users/dashboard'
-  #   end
-  # end
+  get '/supplies/:id' do #get show page with edit button
+    @user = Helpers.current_user(session)
+    Helpers.must_login(session)
+
+    @supply = Supply.find_by_id(params[:id])
+    if @supply
+      erb :"/supplies/show"
+    else
+      redirect to 'users/dashboard'
+    end
+  end
 
   get '/supplies/:id/edit' do
     @user = Helpers.current_user(session)
@@ -73,12 +73,16 @@ class SuppliesController < ApplicationController
     erb :'/supplies/edit'
   end
 
-  patch '/supplies/:id' do#update supply
+  patch '/:id' do#update supply
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
-
     @supply = Supply.find_by_id(params[:id])
-    params.delete(:_method)
+    binding.pry
+
+    #better way?
+    params.delete("_method")
+    params.delete("id")
+    params.select {|k,v| v!= ""}
     @supply.update(params)
     @supply.save
     redirect to "/supplies/#{@supply.id}"
@@ -102,7 +106,6 @@ binding.
     @project = Project.find_by(id: params[:id])
     user = @user
 
-      #should be a module, need part of it in dashboard erb
     if @project
       @current = @project.supplies.uniq
       Helpers.all_supplies(user)#should return @all
@@ -110,7 +113,6 @@ binding.
         @other = @all + @current - @current
       end
     end
-
 
     # => from text fields
     new = params.values[1..3]
