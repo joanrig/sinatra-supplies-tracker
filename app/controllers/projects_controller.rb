@@ -13,8 +13,10 @@ class ProjectsController < ApplicationController
   post '/projects' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
+    binding.pry
+    p = params[:name].split.map(&:capitalize).join(' ')
 
-    @found = Project.find_by(name: params[:name].downcase)
+    @found = Project.find_by(name: p)
     if @found
       #flash message - this project already exits, redirecting you to its page
       redirect to "/projects/#{@found.id}"
