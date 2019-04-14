@@ -64,7 +64,7 @@
     <th><a href="/users/dashboard/<%= @user.id %>">Dashboard</a>
     <th><a a href="/users/logout">Log Out</a></th>
   </tr>
-  </table>
+</table>
 
 <br>
 <br>
@@ -102,7 +102,9 @@
 
 <h1>Supplies</h1>
 <br>
-<form action="/supplies/assign/project/<%= @project.id %>" method="post">
+<form action="/supplies/assign/project/<%=@project.id%>" method="post">
+
+
   <input type="submit" value= "Update Supplies">
 </form>
 <br>

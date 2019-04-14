@@ -35,6 +35,10 @@ class SuppliesController < ApplicationController
     end
   end
 
+  get 'supplies/assign' do
+    erb :'/supplies/assign'
+  end
+
 
   get '/supplies/:id' do #get show page with edit button
     @user = Helpers.current_user(session)
@@ -45,8 +49,8 @@ class SuppliesController < ApplicationController
       erb :"/supplies/show"
     else
       user = @user
-      Helpers.all_supplies(user)
-      redirect to 'users/dashboard'
+      #Helpers.all_supplies(user)
+      redirect to '/users/dashboard'
     end
   end
 
@@ -57,6 +61,10 @@ class SuppliesController < ApplicationController
     @supply = Supply.find_by_id(params[:id])
     @supply.update(params)
     erb :'/supplies/edit'
+  end
+
+  patch '/supplies/assign/project/:id' do
+    binding.pry
   end
 
   patch '/:id' do#update supply
@@ -114,11 +122,7 @@ binding.
     erb :'supplies/assign'
   end
 
-  post '/supplies/add/project/:id' do
-    binding.pry
 
-    erb :'supplies/assign'
-  end
 
 
 end

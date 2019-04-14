@@ -44,7 +44,7 @@ class ProjectsController < ApplicationController
     if @project
       erb :"/projects/show"
     else
-      redirect to 'users/dashboard'
+      redirect to "/users/dashboard/#{@user.id}"
     end
   end
 

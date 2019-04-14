@@ -34,9 +34,12 @@
 <h1><%= @project.name.capitalize %></h1>
 
 
+<h2>Supplies already assigned to this project</h2>
 
-<form  action="supplies/add/project/<%= @project.id %>" method="post">
+<form  action="/supplies/assign/project/<%= @project.id %>" method="post">
 <input id="hidden" type="hidden" name="_method" value="patch">
+
+
 <% if @current %>
   <% if @current.size > 1 %>
     <% @current.each do |supply| %>
@@ -46,6 +49,7 @@
       <input type="checkbox" id="<%= @current.first.name %>" name="user[project_ids][][supplies]" value="<%= @current.first.name %>" checked>  <%= @current.first.name %><br>
   <% end %>
 <% end %>
+
 
 
 <br>
@@ -62,13 +66,13 @@
     <input type="checkbox" id="<%= only.name %>" name="user[project_ids][][supplies]" value="<%= only.name %>" >  <%= only.name %><br>
   <% end %>
 <% end %>
-</form>
+
 
 <br>
 <br>
 
 <h5> or create some new supplies:</h5>
-<form action="/supplies/assign/project/<%= @project.id %>" method="post">
+
   <input type="hidden" name="[:id]" value="<%= @project.id %>">
   <input type="string"  name="supply1_name">
   <br>
