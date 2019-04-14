@@ -3,23 +3,6 @@ require 'sinatra/base'
 
 class SuppliesController < ApplicationController
 
-  # get '/supplies' do
-  #   @user = Helpers.current_user(session)
-  #   Helpers.must_login(session)
-  #
-  #   @supplies = Supply.all.map {|supply| supply.delete if supply.name = ""}
-  #   @my_supplies = []
-  #   if @user.projects.size > 1
-  #     @user.projects.each do |project|
-  #       @my_supplies << project.supplies if project.supplies
-  #       @my_supplies = @my_supplies.flatten
-  #       binding.pry
-  #     end
-  #   elsif user.projects.size == 1
-  #     @my_supplies << @user.projects.first.supplies if @user.projects.first.supplies
-  #   end
-  #   erb :'/supplies/index'
-  # end
 
   get '/supplies/new' do #works
     @user = Helpers.current_user(session)
@@ -32,15 +15,14 @@ class SuppliesController < ApplicationController
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
     @found = Supply.find_by(name: params[:name].downcase)
-    binding.pry
+
     if @found
       #flash message - this supply already exits, redirecting you to its page
       redirect to "/supplies/#{@found.id}"
     else
       params.delete("_method")
-      binding.pry
+      params[:name].downcase
       @supply = Supply.create(params)
-      binding.pry
     end
 
     if @supply.save
@@ -70,6 +52,7 @@ class SuppliesController < ApplicationController
   get '/supplies/:id/edit' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
+
     @supply = Supply.find_by_id(params[:id])
     @supply.update(params)
     erb :'/supplies/edit'
@@ -78,6 +61,7 @@ class SuppliesController < ApplicationController
   patch '/:id' do#update supply
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
+
     @supply = Supply.find_by_id(params[:id])
     params.delete("_method")
     params.delete_if {|key, value| value == "" }

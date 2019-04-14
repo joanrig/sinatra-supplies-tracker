@@ -19,6 +19,7 @@ class ProjectsController < ApplicationController
       #flash message - this project already exits, redirecting you to its page
       redirect to "/projects/#{@found.id}"
     else
+      params.delete("_method")
       params[:name].downcase
       @project = Project.create(params)
     end
@@ -40,7 +41,6 @@ class ProjectsController < ApplicationController
     Helpers.must_login(session)
 
     @project = Project.find_by_id(params[:id])
-    #binding.pry
     if @project
       erb :"/projects/show"
     else
@@ -49,7 +49,6 @@ class ProjectsController < ApplicationController
   end
 
   get '/projects/:id/edit' do#get edit page
-    #binding.pry
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
 
@@ -75,6 +74,7 @@ class ProjectsController < ApplicationController
   post 'projects/:id/delete' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
+    
     Project.find(params[:id]).delete
     redirect to "/users/dashboard/#{@user.id}"
   end
