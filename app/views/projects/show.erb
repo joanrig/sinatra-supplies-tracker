@@ -102,9 +102,11 @@
 
 <h1>Supplies</h1>
 <br>
+<!--
 <form action="/supplies/assign/project/<%=@project.id%>" method="post">
+-->
 
-
+<form action="/supplies/assign/<%=@project.id%>" method="get">
   <input type="submit" value= "Update Supplies">
 </form>
 <br>

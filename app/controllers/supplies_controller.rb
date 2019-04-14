@@ -1,8 +1,4 @@
-require './config/environment'
-require 'sinatra/base'
-
 class SuppliesController < ApplicationController
-
 
   get '/supplies/new' do #works
     @user = Helpers.current_user(session)
@@ -35,67 +31,29 @@ class SuppliesController < ApplicationController
     end
   end
 
-  get 'supplies/assign' do
-    erb :'/supplies/assign'
-  end
+  patch '/assign/:id/edit' do
 
-
-  get '/supplies/:id' do #get show page with edit button
-    @user = Helpers.current_user(session)
-    Helpers.must_login(session)
-
-    @supply = Supply.find_by_id(params[:id])
-    if @supply
-      erb :"/supplies/show"
-    else
-      user = @user
-      #Helpers.all_supplies(user)
-      redirect to '/users/dashboard'
-    end
-  end
-
-  get '/supplies/:id/edit' do
-    @user = Helpers.current_user(session)
-    Helpers.must_login(session)
-
-    @supply = Supply.find_by_id(params[:id])
-    @supply.update(params)
-    erb :'/supplies/edit'
-  end
-
-  patch '/supplies/assign/project/:id' do
-    binding.pry
-  end
-
-  patch '/:id' do#update supply
-    @user = Helpers.current_user(session)
-    Helpers.must_login(session)
-
-    @supply = Supply.find_by_id(params[:id])
-    params.delete("_method")
-    params.delete_if {|key, value| value == "" }
-    @supply.update(params)
-    @supply.save
-    redirect to "/supplies/#{@supply.id}"
-  end
-
-  delete '/:id' do
-    @user = Helpers.current_user(session)
-    Helpers.must_login(session)
-binding.
-    Supply.find_by_id(params[:id]).delete
-    # if Helpers.current_user(session).id != @supply.user_id
-    #   #warning message - you can't delete someone else's supplies
-    #   redirect to suppliess.
-    # end
-    redirect to '/supplies'
-  end
-
-  post '/supplies/assign/project/:id' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
     @project = Project.find_by(id: params[:id])
+    if params[:user][:project_ids][:supplies]
+      @supplies = params[:user][:project_ids][:supplies].map do |supply_name|
+        Supply.find_or_create_by(name: supply_name) if supply_name != ""
+      end
+    end
 
+    @supplies.compact!
+    @project.supplies = @supplies
+    binding.pry
+    @project.save
+    redirect "/supplies/assign/#{@project.id}"
+  end
+
+  get '/supplies/assign/:id' do
+    @user = Helpers.current_user(session)
+    Helpers.must_login(session)
+    @project = Project.find_by(id: params[:id])
+    
     if @project
       @current = @project.supplies.uniq
       @all = []
@@ -112,15 +70,68 @@ binding.
       @other.uniq
     end
 
-    # => from text fields
-    new = params.values[1..3]
-    new.each do |value|
-      if value != ""
-        @project.supplies << Supply.find_or_create_by(name: value.downcase)
-      end
-    end
-    erb :'supplies/assign'
+    erb :'/supplies/assign'
   end
+
+
+  get '/supplies/:id' do #get show page with edit button
+    @user = Helpers.current_user(session)
+    Helpers.must_login(session)
+
+    @supply = Supply.find_by_id(params[:id])
+    if @supply
+      erb :"/supplies/show"
+    else
+      redirect to "/users/dashboard/#{@user.id}"
+    end
+  end
+
+  get '/supplies/:id/edit' do
+    @user = Helpers.current_user(session)
+    Helpers.must_login(session)
+
+    @supply = Supply.find_by_id(params[:id])
+    @supply.update(params)
+    erb :'/supplies/edit'
+  end
+
+
+  patch '/:id' do#update supply
+    @user = Helpers.current_user(session)
+    Helpers.must_login(session)
+
+    @supply = Supply.find_by_id(params[:id])
+    params.delete("_method")
+    params.delete_if {|key, value| value == "" }
+    @supply.update(params)
+    @supply.save
+    redirect to "/supplies/#{@supply.id}"
+  end
+
+  delete '/:id' do
+    @user = Helpers.current_user(session)
+    Helpers.must_login(session)
+
+    Supply.find_by_id(params[:id]).delete
+    # if Helpers.current_user(session).id != @supply.user_id
+    #   #warning message - you can't delete someone else's supplies
+    #   redirect to suppliess.
+    # end
+    redirect to '/supplies'
+  end
+
+  # post '/supplies/assign/project/:id' do
+    
+  #   # => from text fields
+  #   # new = params.values[1..3]
+  #   # new.each do |value|
+  #   #   if value != ""
+  #   #     @project.supplies << Supply.find_or_create_by(name: value.downcase)
+  #   #   end
+  #   # end
+  #   binding.pry
+  #   erb :'supplies/assign'
+  # end
 
 
 

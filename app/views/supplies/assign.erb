@@ -1,25 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<style>
 
-#navbar {
-  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-#navbar th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: center;
-  background-color: #bdddaa;
-  color: white;
-}
-
-
-</style>
-</head>
 <table id="navbar">
   <tr>
     <th><a href="/users/dashboard/<%= @user.id %>">Dashboard</a>
@@ -36,57 +15,53 @@
 
 <h2>Supplies already assigned to this project</h2>
 
-<form  action="/supplies/assign/project/<%= @project.id %>" method="post">
-<input id="hidden" type="hidden" name="_method" value="patch">
+<form action="/supplies/assign/<%=@project.id%>/edit" method="post">
+  <input type="hidden" id="hidden" value="patch" name="_method">
 
-
-<% if @current %>
-  <% if @current.size > 1 %>
-    <% @current.each do |supply| %>
-      <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][][supplies]" value="<%= supply.name %>" checked>  <%= supply.name %><br>
+  <% if @current %>
+    <% if @current.size > 1 %>
+      <% @current.each do |supply| %>
+        <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][supplies][]" value="<%= supply.name %>" checked>  <%= supply.name %><br>
+      <% end %>
+    <% elsif @current.size == 1 %>
+        <input type="checkbox" id="<%= @current.first.name %>" name="user[project_ids][supplies][]" value="<%= @current.first.name %>" checked>  <%= @current.first.name %><br>
     <% end %>
-  <% elsif @current.size == 1 %>
-      <input type="checkbox" id="<%= @current.first.name %>" name="user[project_ids][][supplies]" value="<%= @current.first.name %>" checked>  <%= @current.first.name %><br>
   <% end %>
-<% end %>
 
 
 
-<br>
-<br>
+  <br>
+  <br>
 
-<p>Would you like to add any of these supplies from your other projects?</p>
-<% if @other %>
-  <% if @other.size > 1 %>
-    <% @other.uniq.each do |supply| %>
-      <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][][supplies]" value="<%= supply.name %>">  <%= supply.name %><br>
+  <p>Would you like to add any of these supplies from your other projects?</p>
+  <% if @other %>
+    <% if @other.size > 1 %>
+      <% @other.uniq.each do |supply| %>
+        <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][supplies][]" value="<%= supply.name %>">  <%= supply.name %><br>
+      <% end %>
+    <% elsif @other.size == 1 %>
+      <% only = @other.first %>
+      <input type="checkbox" id="<%= only.name %>" name="user[project_ids][supplies][]" value="<%= only.name %>" >  <%= only.name %><br>
     <% end %>
-  <% elsif @other.size == 1 %>
-    <% only = @other.first %>
-    <input type="checkbox" id="<%= only.name %>" name="user[project_ids][][supplies]" value="<%= only.name %>" >  <%= only.name %><br>
   <% end %>
-<% end %>
 
 
-<br>
-<br>
+  <br>
+  <br>
 
-<h5> or create some new supplies:</h5>
+  <h5> or create some new supplies:</h5>
 
-  <input type="hidden" name="[:id]" value="<%= @project.id %>">
-  <input type="string"  name="supply1_name">
+  <input type="string"  name="user[project_ids][supplies][]">
   <br>
   <br>
-  <input type="string" name="supply2_name">
+  <input type="string" name="user[project_ids][supplies][]">
   <br>
   <br>
-  <input type="string" name="supply3_name">
+  <input type="string" name="user[project_ids][supplies][]">
   <br>
   <br>
 
   <p>Click the button below to update this project's supplies. Then reload your page to see the changes.</p>
-  <input type="submit" value="update">
 
+  <input type="submit" id="submit" value="Update Current Supplies">
 </form>
-<br>
-<br>
