@@ -49,10 +49,10 @@ class ProjectsController < ApplicationController
   end
 
   get '/projects/:id/edit' do#get edit page
+    @user = Helpers.current_user(session)
+    Helpers.must_login(session)
 
-
-    @project.update(params)
-    @project.save
+    @project = Project.find_by_id(params[:id])
     erb :'/projects/edit'
   end
 
