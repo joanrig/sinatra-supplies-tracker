@@ -72,9 +72,10 @@ class ProjectsController < ApplicationController
   end
 
   post 'projects/:id/delete' do
+    binding.pry
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
-    
+
     Project.find(params[:id]).delete
     redirect to "/users/dashboard/#{@user.id}"
   end

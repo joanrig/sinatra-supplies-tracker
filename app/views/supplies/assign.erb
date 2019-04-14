@@ -13,7 +13,7 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
-  background-color: #469ad6;
+  background-color: #bdddaa;
   color: white;
 }
 
@@ -30,12 +30,13 @@
 <br>
 <h2>Project Supplies</h2>
 <br>
-<br>
 
 <h1><%= @project.name.capitalize %></h1>
 
 
 <p>Supplies already assigned to this project (fix so you can uncheck to remove):</p>
+<form  action="supplies/add/project/<%= @project.id %>" method="post">
+<input id="hidden" type="hidden" name="_method" value="patch">
 <% if @current %>
   <% if @current.size > 1 %>
     <% @current.each do |supply| %>
@@ -49,18 +50,19 @@
 
 <br>
 <br>
+
 <p>Would you like to add any of these supplies from your other projects?</p>
-<% binding.pry %>
 <% if @other %>
   <% if @other.size > 1 %>
-    <% @other.each do |supply| %>
+    <% @other.uniq.each do |supply| %>
       <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][][supplies]" value="<%= supply.name %>">  <%= supply.name %><br>
     <% end %>
   <% elsif @other.size == 1 %>
     <% only = @other.first %>
-    <input type="checkbox" id="<%= only.name %>" name="user[project_ids][][supplies]" value="<%= only.name %>" checked>  <%= only.name %><br>
+    <input type="checkbox" id="<%= only.name %>" name="user[project_ids][][supplies]" value="<%= only.name %>" >  <%= only.name %><br>
   <% end %>
 <% end %>
+</form>
 
 <br>
 <br>

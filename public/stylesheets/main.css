@@ -13,7 +13,7 @@
 
   /* --- Welcome Page Styles --- */
   body {
-    background-image: url("/images/brooke-lark-158019-unsplash.jpg");
+    background-image: url("public/images/zengarden.jpg");
     background-color: lightyellow;
     color: #333;
     font-family: Sans-Serif;

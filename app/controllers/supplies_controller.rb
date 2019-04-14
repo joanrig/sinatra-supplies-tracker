@@ -86,7 +86,6 @@ binding.
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
     @project = Project.find_by(id: params[:id])
-    user = @user
 
     if @project
       @current = @project.supplies.uniq
@@ -99,9 +98,9 @@ binding.
       end
     end
 
-    if @other && @all && @current
-      binding.pry
+    if @all && @current
       @other = @all + @current - @current
+      @other.uniq
     end
 
     # => from text fields
@@ -111,6 +110,12 @@ binding.
         @project.supplies << Supply.find_or_create_by(name: value.downcase)
       end
     end
+    erb :'supplies/assign'
+  end
+
+  post '/supplies/add/project/:id' do
+    Hello World
+    binding.pry
     erb :'supplies/assign'
   end
 

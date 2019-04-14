@@ -18,7 +18,7 @@
 #supplies tr:hover {background-color: #ddd;}
 
 #supplies th {
-  padding-top: 24px;
+  padding-top: 18px;
   padding-bottom: 12px;
   text-align: center;
   background-color: #4CAF50;
@@ -26,7 +26,7 @@
 }
 
 #projects th {
-  padding-top: 24px;
+  padding-top: 18px;
   padding-bottom: 12px;
   text-align: center;
   background-color: #4c97af;
@@ -113,7 +113,6 @@
     <th>Website</th>
     <th>Unit type</th>
     <th>Price per unit</th>
-    <th>Units needed</th>
   </tr>
 
   <% if @project.supplies.size > 1 %>
@@ -124,7 +123,6 @@
       <td><a href="<%= supply.website %>"><%= supply.website %></a></td>
       <td><%= supply.unit_type %></td>
       <td><%= supply.price_per_unit %></td>
-      <td><%= supply.units_needed %></td>
     </tr>
     <% end %>
   <% end %>
@@ -137,7 +135,6 @@
       <td><a href="<%= only.website %>"></a><%= only.website %></td>
       <td><%= only.unit_type %></td>
       <td><%= only.price_per_unit %></td>
-      <td><%= only.units_needed %></td>
     </tr>
   <% end %>
   </table>
