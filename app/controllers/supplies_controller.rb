@@ -15,7 +15,7 @@ class SuppliesController < ApplicationController
 
     if p
       @supplies = p.map do |supply_name|
-        Supply.find_or_create_by(name: supply_name) if supply_name != ""
+        Supply.find_or_create_by(name: supply_name.downcase) if supply_name != ""
       end
     end
 
