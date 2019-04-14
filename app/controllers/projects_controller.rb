@@ -35,8 +35,8 @@ class ProjectsController < ApplicationController
     end
   end
 
-
-  get '/projects/:id' do #get show page with edit button
+  get '/projects/:id' do
+    #get show page with edit button
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
 
@@ -49,21 +49,18 @@ class ProjectsController < ApplicationController
   end
 
   get '/projects/:id/edit' do#get edit page
-    @user = Helpers.current_user(session)
-    Helpers.must_login(session)
 
-    @project = Project.find_by_id(params[:id])
+
     @project.update(params)
     @project.save
     erb :'/projects/edit'
   end
 
-
   patch '/:id' do#update project
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
-
     @project = Project.find_by_id(params[:id])
+
     params.delete(:_method)
     params.delete_if {|key, value| value == "" }
     @project.update(params)
@@ -71,13 +68,27 @@ class ProjectsController < ApplicationController
     redirect to "/projects/#{@project.id}"#{show edited proj}
   end
 
-  post 'projects/:id/delete' do
-    binding.pry
+  get '/projects/:id/delete' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
+    @project = Project.find_by_id(params[:id])
+    binding.pry
 
-    Project.find(params[:id]).delete
+    if @project.user.id == @user.id
+      @project.destroy
+      #flash message - successfully deleted
+    end
     redirect to "/users/dashboard/#{@user.id}"
   end
 
+
+
+
+  # helpers do
+  #   def vet_user_and_project
+  #     @user = Helpers.current_user(session)
+  #     Helpers.must_login(session)
+  #     @project = Project.find_by_id(params[:id])
+  #   end
+  # end
 end
