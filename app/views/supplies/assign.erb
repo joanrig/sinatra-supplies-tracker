@@ -34,7 +34,7 @@
 <h1><%= @project.name.capitalize %></h1>
 
 
-<p>Supplies already assigned to this project (fix so you can uncheck to remove):</p>
+
 <form  action="supplies/add/project/<%= @project.id %>" method="post">
 <input id="hidden" type="hidden" name="_method" value="patch">
 <% if @current %>

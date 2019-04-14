@@ -14,6 +14,7 @@ class SuppliesController < ApplicationController
   post '/supplies' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
+
     @found = Supply.find_by(name: params[:name].downcase)
 
     if @found
@@ -114,8 +115,8 @@ binding.
   end
 
   post '/supplies/add/project/:id' do
-    Hello World
     binding.pry
+
     erb :'supplies/assign'
   end
 

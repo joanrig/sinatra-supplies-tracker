@@ -86,3 +86,6 @@ flash code for layout.erb
     #   end
     #   erb :'/supplies/index'
     # end
+
+lu
+delete '/greetups/:id' do   set_greetup   #@greetup = Greetup.find(params[:id])   if authorized_to_edit?(@greetup)   #if current_user == @greetup.user   #@greetups = Greetup.all     @greetup.destroy      flash[:message] = "Successfully deleted #{@greetup.name}."     redirect '/greetups'   else     redirect '/greetups'   end end
