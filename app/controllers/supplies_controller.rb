@@ -112,8 +112,7 @@ class SuppliesController < ApplicationController
     @supply = Supply.find_by_id(params[:id])
     binding.pry
 
-    if @user.projects.any.include?(@supply)
-      @supply.project.user_id == @user.id
+    if @user.projects.any? {|project| project.supplies.include?(@supply)}
       @supply.destroy
       #flash message - successfully deleted
     end
