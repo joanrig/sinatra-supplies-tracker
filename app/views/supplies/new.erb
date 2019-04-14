@@ -1,8 +1,5 @@
-Create a new supply
+<h1>Create a new supply</h1>
 <form action="/supplies" method="post">
-
-<form action="/supplies/<%=@supply.id%>" method="post">
-  <input id="hidden" type="hidden" name="_method" value="patch">
 
     <h3><label for="name">Name:</label></h3>
     <input type="string" name="name" id="name" placeholder="supply name">
@@ -24,10 +21,11 @@ Create a new supply
     <br>
 
     <h3><label for="units needed">Units needed:</label></h3>
-    <input type="integer" name="units_needed" id="unit needed>
+    <input type="number" name="units_needed" id="unit needed">
     <br>
+    <br>
+    <b>
 
-    <input type="submit" placeholder="Create this Supply">
-
+    <input type="submit" value="Create this Supply">
 
 </form>

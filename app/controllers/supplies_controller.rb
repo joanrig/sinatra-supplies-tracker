@@ -22,9 +22,9 @@ class SuppliesController < ApplicationController
   end
 
   get '/supplies/new' do #works
+    binding.pry
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
-
     session[:user_id]  = @user.id
     erb :'/supplies/new'
   end
@@ -38,13 +38,13 @@ class SuppliesController < ApplicationController
       #flash message - this supply already exits, redirecting you to its page
       redirect to "/supplies/#{@found.id}"
     else
+      params.delete("_method")
       @supply = Supply.create(params)
     end
 
     if @supply.save
-      @supply.name.capitalize
       #flash[:message] = "Successfully created supply."
-      redirect to "/supplies/#{supply.id}"
+      erb :'/supplies/show'
     else
       #flash[:message] = "Please make sure your supply has a name."
       redirect to '/supplies/new'
@@ -52,18 +52,17 @@ class SuppliesController < ApplicationController
   end
 
 
-  get '/supplies/:id' do #get show page with edit button
-    @user = Helpers.current_user(session)
-    Helpers.must_login(session)
-    binding.pry
-
-    @supply = Supply.find_by_id(params[:id])
-    if @supply
-      erb :"/supplies/show"
-    else
-      redirect to 'users/dashboard'
-    end
-  end
+  # get '/supplies/:id' do #get show page with edit button
+  #   @user = Helpers.current_user(session)
+  #   Helpers.must_login(session)
+  #
+  #   @supply = Supply.find_by_id(params[:id])
+  #   if @supply
+  #     erb :"/supplies/show"
+  #   else
+  #     redirect to 'users/dashboard'
+  #   end
+  # end
 
   get '/supplies/:id/edit' do
     @user = Helpers.current_user(session)
