@@ -53,7 +53,7 @@ class SuppliesController < ApplicationController
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
     @project = Project.find_by(id: params[:id])
-    
+
     if @project
       @current = @project.supplies.uniq
       @all = []
@@ -119,21 +119,6 @@ class SuppliesController < ApplicationController
     # end
     redirect to '/supplies'
   end
-
-  # post '/supplies/assign/project/:id' do
-    
-  #   # => from text fields
-  #   # new = params.values[1..3]
-  #   # new.each do |value|
-  #   #   if value != ""
-  #   #     @project.supplies << Supply.find_or_create_by(name: value.downcase)
-  #   #   end
-  #   # end
-  #   binding.pry
-  #   erb :'supplies/assign'
-  # end
-
-
 
 
 end

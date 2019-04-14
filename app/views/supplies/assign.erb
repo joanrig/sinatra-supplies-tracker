@@ -12,9 +12,10 @@
 
 <h1><%= @project.name.capitalize %></h1>
 
-
-<h2>Supplies already assigned to this project</h2>
-
+<br>
+<h4>Supplies already assigned to this project</h4>
+<p>(uncheck to remove)</p>
+<br>
 <form action="/supplies/assign/<%=@project.id%>/edit" method="post">
   <input type="hidden" id="hidden" value="patch" name="_method">
 
@@ -33,7 +34,8 @@
   <br>
   <br>
 
-  <p>Would you like to add any of these supplies from your other projects?</p>
+  <h4>Would you like to add any of these supplies from your other projects?</h4>
+  <br>
   <% if @other %>
     <% if @other.size > 1 %>
       <% @other.uniq.each do |supply| %>
@@ -49,8 +51,8 @@
   <br>
   <br>
 
-  <h5> or create some new supplies:</h5>
-
+  <h4> or, create some new supplies:</h4>
+<br>
   <input type="string"  name="user[project_ids][supplies][]">
   <br>
   <br>
@@ -61,7 +63,9 @@
   <br>
   <br>
 
-  <p>Click the button below to update this project's supplies. Then reload your page to see the changes.</p>
+<br>
 
+  <h4>Changes look good? If so, click below! </h4>
+  <br>
   <input type="submit" id="submit" value="Update Current Supplies">
 </form>
