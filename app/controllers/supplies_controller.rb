@@ -109,6 +109,7 @@ class SuppliesController < ApplicationController
   end
 
   delete '/:id' do
+    binding.pry
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
 
