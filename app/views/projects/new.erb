@@ -1,29 +1,29 @@
-Create a new project
+<h1>Create a new project</h1>
 <form action="/projects" method="post">
 
-  <label for="name">Name:</label>
-  <input type="text" name="name" id="name" placeholder="project name" required>
+  <h3><label for="name">Name:</label></h3>
+  <input type="string" name="name" id="name" placeholder="project name" required>
   <br>
 
-  <label for="project_type">Type:</label>
-  <input type="text" name="project_type" id="project_type" placeholder="class, party, etc.">
+  <h3><label for="project_type">Type:</label></h3>
+  <input type="text" name="project_type" id="project_type" placeholder="class, party, vacation, etc.">
   <br>
 
-  <label for="attendees">Attendees: </label>
-  <input type="number" name="attendees" id="attendees" placeholder="number of attendees">
+  <h3><label for="attendees">Attendees: </label></h3>
+  <input type="number" name="attendees" id="attendees" placeholder="estimated">
   <br>
 
-  <label for="supplies_budget">Supplies Budget: </label>
-  <input type="number" min="0.00" max="100000.00" step="10.00" name="supplies_budget">
+  <h3><label for="supplies_budget">Supplies Budget: </label></h3>
+  <input type="number" min="0.00" max="100000.00" step="10.00" name="supplies_budget"placeholder="estimated">
   <br>
 
-  <label for="date">Date: </label>
+  <h3><label for="date">Date: </label></h3>
   <input type="date" name="date" id="date" placeholder="date">
   <br>
+  <br>
+  <br>
+  <input type="submit" value="Create Project">
 
-  <input type="submit" id="submit" placeholder="Create Project">
-  <br>
-  <br>
 
 
 </form>

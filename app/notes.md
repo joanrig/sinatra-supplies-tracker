@@ -50,3 +50,20 @@ flash code for layout.erb
     <br>
     <br>
     <br>
+
+
+    <% if @all %>
+      <% if @all.size == 1 %>
+    <% binding.pry %>
+        <a href="<a href="/supplies/<%= supply.ids %>">
+        <%= supply.name.capitalize %></a>
+        <% binding.pry %>
+    <% binding.pry %>
+      <% elsif @all.size > 1 %>
+        <% @all.each do |supply| %>
+        <ul>
+          <li><a href="/supplies/<%= supply.ids %>"><%= supply.name.capitalize %></a></li>
+        </ul>
+        <% end %>
+      <% end %>
+    <% end %>

@@ -64,11 +64,9 @@ class ProjectsController < ApplicationController
 
     @project = Project.find_by_id(params[:id])
     params.delete(:_method)
-    params.delete_if {|key, value| value == "" }#empty spaces won't overwrite old info anymore
-    binding.pry
+    params.delete_if {|key, value| value == "" }
     @project.update(params)
     @project.save
-
     redirect to "/projects/#{@project.id}"#{show edited proj}
   end
 
@@ -77,7 +75,7 @@ class ProjectsController < ApplicationController
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
     @project = Project.find_by_id(params[:id])
-        binding.pry  
+        binding.pry
     @project.delete
     redirect to '/projects'
   end

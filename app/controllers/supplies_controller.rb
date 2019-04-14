@@ -22,7 +22,6 @@ class SuppliesController < ApplicationController
   end
 
   get '/supplies/new' do #works
-    binding.pry
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
     session[:user_id]  = @user.id
@@ -32,8 +31,9 @@ class SuppliesController < ApplicationController
   post '/supplies' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
-
+binding.pry
     @found = Supply.find_by(name: params[:name].capitalize)
+    binding.pry
     if @found
       #flash message - this supply already exits, redirecting you to its page
       redirect to "/supplies/#{@found.id}"
@@ -60,6 +60,8 @@ class SuppliesController < ApplicationController
     if @supply
       erb :"/supplies/show"
     else
+      user = @user
+      Helpers.all_supplies(user)
       redirect to 'users/dashboard'
     end
   end
@@ -67,7 +69,6 @@ class SuppliesController < ApplicationController
   get '/supplies/:id/edit' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
-
     @supply = Supply.find_by_id(params[:id])
     @supply.update(params)
     erb :'/supplies/edit'
@@ -77,12 +78,8 @@ class SuppliesController < ApplicationController
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
     @supply = Supply.find_by_id(params[:id])
-    binding.pry
-
-    #better way?
     params.delete("_method")
-    params.delete("id")
-    params.select {|k,v| v!= ""}
+    params.delete_if {|key, value| value == "" }
     @supply.update(params)
     @supply.save
     redirect to "/supplies/#{@supply.id}"
@@ -108,11 +105,18 @@ binding.
 
     if @project
       @current = @project.supplies.uniq
-      Helpers.all_supplies(user)#should return @all
-      if @other && @all && @current
-        @other = @all + @current - @current
+      @all = []
+      @user.projects.each do |project|
+        s = project.supplies
+        s.each do |supply|
+          @all << supply
+        end
       end
+      
+    if @other && @all && @current
+      @other = @all + @current - @current
     end
+  end
 
     # => from text fields
     new = params.values[1..3]

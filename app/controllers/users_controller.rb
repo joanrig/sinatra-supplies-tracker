@@ -61,7 +61,6 @@ class UsersController < ApplicationController
   get '/users/dashboard/:id' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
-
     @projects = @user.projects
     erb :'/users/dashboard'
   end

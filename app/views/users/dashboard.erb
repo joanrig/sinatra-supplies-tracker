@@ -80,21 +80,17 @@
   <h1>My Supplies</h1>
   <br>
 
-  <% user = @user %>
-  <% @all =  Helpers.all_supplies(user) %>
-  <% if @all %>
-    <% if @all.size == 1 %>
-      <a href="<a href="/supplies/<%= supply.id %>">
-      <%= supply.name.capitalize %></a>
-
-    <% elsif @all.size > 1 %>
-      <% @all.each do |supply| %>
-      <ul>
-        <li><a href="/supplies/<%= supply.id %>"><%= supply.name.capitalize %></a></li>
-      </ul>
-      <% end %>
+  <% @user.projects.each do |project| %>
+    <% s = project.supplies %>
+    <% s.each do |supply| %>
+      <%= supply.name %>
+      <br>
     <% end %>
   <% end %>
+
+
+
+
 
 
     <br>
