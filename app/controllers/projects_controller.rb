@@ -28,7 +28,7 @@ class ProjectsController < ApplicationController
     @project.user_id = @user.id
     if @project.save
       @user.projects << @project
-      flash[:message] = "Successfully created project."
+      flash[:message] = "Project successfully created."
       redirect to "/projects/#{@project.id}"
     end
   end

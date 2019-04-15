@@ -91,7 +91,7 @@ class SuppliesController < ApplicationController
 
     if @user.projects.any? {|project| project.supplies.include?(@supply)}
       @supply.destroy
-      #flash message - successfully deleted
+      flash[:message] = "Supply was successfully deleted."
     end
     redirect to "/users/dashboard/#{@user.id}"
   end
