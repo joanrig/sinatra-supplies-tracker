@@ -54,42 +54,42 @@ Supply.create!([{
   vendor: "Amazon",
   website: "http://www.amazon.com",
   unit_type: "gallon",
-  price_per_unit: 5.50,
+  price_per_unit: 5,
 },
 {
   name: "PVC",
   vendor: "Home Depot",
   website: "http://www.homedepot.com",
   unit_type: "6 feet",
-  price_per_unit: 4.59,
+  price_per_unit: 4,
 },
 {
   name: "paint",
   vendor: "Michaels",
   website: "http://www.michaels.com",
   unit_type: "gallon",
-  price_per_unit: 8.99,
+  price_per_unit: 9,
 },
 {
   name: "clay",
   vendor: "Amazon",
   website: "http://www.amazon.com",
   unit_type: "20 pounds",
-  price_per_unit: 39.95,
+  price_per_unit: 40,
 },
 {
   name: "sonic screwdriver",
   vendor: "Amazon",
   website: "http://www.amazon.com",
   unit_type: "box of 12",
-  price_per_unit: 19.95,
+  price_per_unit: 20,
 },
 {
   name: "food coloring",
   vendor: "local grocery",
   website: "",
   unit_type: "box of 4",
-  price_per_unit: 3.95,
+  price_per_unit: 6,
 }])
 
 
@@ -123,7 +123,7 @@ ProjectSupply.create!([{
 User.destroy_all
 User.create!([{
   name: "Joan",
-  email: "joan@email.com", 
+  email: "joan@email.com",
   password: "test"
 },
 {
