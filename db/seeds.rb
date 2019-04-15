@@ -1,5 +1,3 @@
-
-
 Project.destroy_all
 Project.create!([{
   name: "Girls Get Science",
@@ -122,22 +120,21 @@ ProjectSupply.create!([{
 }])
 
 
-
 User.destroy_all
 User.create!([{
   name: "Joan",
-  email: "joan@gradlab.com",
-  password: "password"
+  email: "joan@email.com,
+  password: "test"
 },
 {
   name: "Laura",
-  email: "laura@quinby.com",
-  password: "password"
+  email: "laura@email.com",
+  password: "test"
 },
 {
-  name: "Frances",
-  email: "frances_h@mom_of_two.com",
-  password: "password"
+  name: "Wonder Woman",
+  email: "wonder@wonder.com",
+  password: "test"
 },
 {
   name: "Dr. Who",
