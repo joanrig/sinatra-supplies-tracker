@@ -22,20 +22,19 @@ class ProjectsController < ApplicationController
         redirect to "/projects/#{@found.id}"
       else
         params.delete("_method")
-        params[:name].downcase
-        @project = Project.create(params)
+        @new = Project.create(params)
+        @new.user_id = @user.id
+        binding.pry
+        if @new
+          flash[:message] = "Project successfully created."
+          redirect to "/projects/#{@new.id}"
+        end
       end
-    end
-
-    @project.user_id = @user.id
-    if @project.save
-      @user.projects << @project
-      flash[:message] = "Project successfully created."
-      redirect to "/projects/#{@project.id}"
     end
   end
 
   get '/projects/:id' do
+    binding.pry
     #get show page with edit button
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
