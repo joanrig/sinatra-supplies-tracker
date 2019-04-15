@@ -1,5 +1,3 @@
-
-
 Project.destroy_all
 Project.create!([{
   name: "Girls Get Science",
@@ -18,7 +16,7 @@ Project.create!([{
   user_id: "2"
 },
 {
-  name: "Art of Math",
+  name: "Art Of Math",
   project_type: "class",
   date: "April 24, 2019",
   attendees: "10",
@@ -57,7 +55,6 @@ Supply.create!([{
   website: "http://www.amazon.com",
   unit_type: "gallon",
   price_per_unit: 5.50,
-  units_needed: 5
 },
 {
   name: "PVC",
@@ -65,15 +62,13 @@ Supply.create!([{
   website: "http://www.homedepot.com",
   unit_type: "6 feet",
   price_per_unit: 4.59,
-  units_needed: 1
 },
 {
   name: "paint",
   vendor: "Michaels",
   website: "http://www.michaels.com",
-  unit_type: "box of 12",
-  price_per_unit: 19.95,
-  units_needed: 1
+  unit_type: "gallon",
+  price_per_unit: 8.99,
 },
 {
   name: "clay",
@@ -81,7 +76,6 @@ Supply.create!([{
   website: "http://www.amazon.com",
   unit_type: "20 pounds",
   price_per_unit: 39.95,
-  units_needed: 2
 },
 {
   name: "sonic screwdriver",
@@ -89,7 +83,6 @@ Supply.create!([{
   website: "http://www.amazon.com",
   unit_type: "box of 12",
   price_per_unit: 19.95,
-  units_needed: 1
 },
 {
   name: "food coloring",
@@ -97,7 +90,6 @@ Supply.create!([{
   website: "",
   unit_type: "box of 4",
   price_per_unit: 3.95,
-  units_needed: 4
 }])
 
 
@@ -128,22 +120,21 @@ ProjectSupply.create!([{
 }])
 
 
-
 User.destroy_all
 User.create!([{
   name: "Joan",
-  email: "joan@gradlab.com",
-  password: "password"
+  email: "joan@email.com,
+  password: "test"
 },
 {
   name: "Laura",
-  email: "laura@quinby.com",
-  password: "password"
+  email: "laura@email.com",
+  password: "test"
 },
 {
-  name: "Frances",
-  email: "frances_h@mom_of_two.com",
-  password: "password"
+  name: "Wonder Woman",
+  email: "wonder@wonder.com",
+  password: "test"
 },
 {
   name: "Dr. Who",

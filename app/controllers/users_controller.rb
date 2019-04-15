@@ -13,22 +13,19 @@ class UsersController < ApplicationController
 
   post '/users/signup' do
     if User.find_by(email: params[:email])
-      #flash[:message] = "This email address already has an account. Please log in."
+      flash[:message] = "This email address already has an account. Please log in."
       redirect to "/users/login"
     else
       @user = User.new(params)
-      if @user.save #flash[:message] = "Account successfully created"
+      if @user.save
+        flash[:message] = "Account successfully created"
         session[:user_id] = @user.id
         erb :'/users/dashboard'
       else
-        #flash[:error] = "Something went wrong. Please try again."
+        flash[:error] = "Something went wrong. Please try again."
         redirect to '/users/login'
       end
     end
-  end
-
-  get '/users/error' do
-    erb :'users/error'
   end
 
   get '/users/login' do
@@ -43,8 +40,7 @@ class UsersController < ApplicationController
       @projects = @user.projects
       erb :"/users/dashboard"
     else
-      # flash[:login_error] = "Incorrect login. Please try again."
-      redirect to '/users/error'
+      flash[:login_error] = "Incorrect login. Please try again."
     end
   end
 
