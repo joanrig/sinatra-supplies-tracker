@@ -24,6 +24,7 @@ class SuppliesController < ApplicationController
           supply.price_per_unit =  nil
           supply[:name] = supply.name.downcase
           supply.save
+          flash[:message] = "Supply successfully added to your project."
           @project.supplies << supply
         end
       end

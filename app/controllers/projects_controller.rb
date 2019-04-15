@@ -15,20 +15,27 @@ class ProjectsController < ApplicationController
     Helpers.must_login(session)
     p = params[:name].split.map{|word| word.capitalize}.join(' ')
 
-    @user.projects.each do |project|
-      if p == project.name.split.map{|word| word.capitalize}.join(' ')
-        flash[:message] = "This project already exists, redirecting you to its page."
-        redirect to "/projects/#{@found.id}"
-      else
-        params.delete("_method")
-        @new = Project.create(params)
-        @new.user_id = @user.id
-        binding.pry
-        if @new
-          flash[:message] = "Project successfully created."
-          redirect to "/projects/#{@new.id}"
+# if is in the wrong place
+    if @user.projects #don't create if found
+      @user.projects.each do |project|
+        if p == project.name.split.map{|word| word.capitalize}.join(' ')
+          flash[:message] = "This project already exists, redirecting you to its page."
+          redirect to "/projects/#{@found.id}"
+        else
+          @new = Project.create(params)
         end
       end
+    end
+
+    if !@user.projects
+      @new = Project.create(params)
+    end
+
+    @new.user_id = @user.id
+
+    if @new
+      flash[:message] = "Project successfully created."
+      redirect to "/projects/#{@new.id}"
     end
   end
 
