@@ -15,7 +15,6 @@ class ProjectsController < ApplicationController
     Helpers.must_login(session)
     p = params[:name].split.map{|word| word.capitalize}.join(' ')
 
-
     @user.projects.each do |project|
       if p == project.name.split.map{|word| word.capitalize}.join(' ')
         flash[:message] = "This project already exists, redirecting you to its page."
