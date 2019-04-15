@@ -12,13 +12,11 @@ class UsersController < ApplicationController
   end
 
   post '/users/signup' do
-    binding.pry
     if User.find_by(email: params[:email])
       #flash[:message] = "This email address already has an account. Please log in."
       redirect to "/users/login"
     else
       @user = User.new(params)
-      binding.pry
       if @user.save #flash[:message] = "Account successfully created"
         session[:user_id] = @user.id
         erb :'/users/dashboard'
@@ -38,7 +36,6 @@ class UsersController < ApplicationController
   end
 
   post '/users/login' do
-    #binding.pry
     session.clear
     @user = User.find_by(email: params[:email])
     if @user && @user.authenticate(params[:password])

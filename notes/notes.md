@@ -36,7 +36,6 @@ to ask:
 
     <table id="navbar">
       <tr>
-        <% binding.pry %>
         <th><a href="/projects/<%= @project.id %>">Edit Project Info</a></th>
         <th><a href="/supplies/assign/<%= @project.id %>">Update Supplies</a></th>
         <th><form action="/projects/<%= @project.id %>" method="post">

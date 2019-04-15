@@ -66,6 +66,7 @@ class SuppliesController < ApplicationController
     end
 
     if @all && @current
+      #@current are new supplies that may or may not be included in @all/ this removes overlap.
       @other = @all + @current - @current
       @other.uniq
     end
@@ -110,7 +111,6 @@ class SuppliesController < ApplicationController
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
     @supply = Supply.find_by_id(params[:id])
-    binding.pry
 
     if @user.projects.any? {|project| project.supplies.include?(@supply)}
       @supply.destroy
