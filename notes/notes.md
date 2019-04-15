@@ -114,3 +114,20 @@ to ask:
         redirect to '/supplies/new'
       end
     end
+
+
+    if p
+      p.map do |supply_name|
+        @user.projects.each do |project|
+          project.supplies.each do |supply|
+            if supply_name.split.map{|word| word.downcase}.join(' ') == supply.name .split.map{|word| word.downcase}.join(' ')
+              flash[:message] = "This supply already exists. Successfully added it to your project."
+            else
+              new_supply = Supply.new(name: supply_name.downcase) if supply_name != ""
+              new_supply.save
+              @project.supplies << new_supply
+            end
+          end
+        end
+      end
+    end

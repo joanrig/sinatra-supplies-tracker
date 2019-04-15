@@ -1,11 +1,11 @@
 class SuppliesController < ApplicationController
 
-  get '/supplies/new' do
-    @user = Helpers.current_user(session)
-    Helpers.must_login(session)
-    session[:user_id]  = @user.id
-    erb :'/supplies/new'
-  end
+  # get '/supplies/new' do
+  #   @user = Helpers.current_user(session)
+  #   Helpers.must_login(session)
+  #   session[:user_id]  = @user.id
+  #   erb :'/supplies/new'
+  # end
 
   patch '/assign/:id/edit' do
     @user = Helpers.current_user(session)
@@ -14,13 +14,15 @@ class SuppliesController < ApplicationController
     p = params[:user][:project_ids][:supplies]
 
     if p
-      @supplies = p.map do |supply_name|
-        Supply.find_or_create_by(name: supply_name.downcase) if supply_name != ""
+      p.map do |supply_name|
+        supply = Supply.find_or_create_by(name: supply_name.downcase) if supply_name != ""
+        if supply
+          supply.save
+          @project.supplies << supply
+        end
       end
     end
 
-    @supplies.compact!
-    @project.supplies = @supplies
     @project.save
     redirect "/supplies/assign/#{@project.id}"
   end

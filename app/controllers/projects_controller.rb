@@ -18,7 +18,7 @@ class ProjectsController < ApplicationController
 
     @user.projects.each do |project|
       if p == project.name.split.map{|word| word.capitalize}.join(' ')
-        flash[:message] = "This project already exits, redirecting you to its page."
+        flash[:message] = "This project already exists, redirecting you to its page."
         redirect to "/projects/#{@found.id}"
       else
         params.delete("_method")
