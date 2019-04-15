@@ -27,10 +27,6 @@ class UsersController < ApplicationController
     end
   end
 
-  get '/users/error' do
-    erb :'users/error'
-  end
-
   get '/users/login' do
     erb :'/users/login'
   end
