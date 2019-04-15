@@ -41,7 +41,6 @@ class UsersController < ApplicationController
       erb :"/users/dashboard"
     else
       flash[:login_error] = "Incorrect login. Please try again."
-      redirect to '/users/error'
     end
   end
 
