@@ -11,7 +11,6 @@ class SuppliesController < ApplicationController
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
     @project = Project.find_by(id: params[:id])
-    binding.pry
     p = params[:user][:project_ids][:supplies]
 
     if p

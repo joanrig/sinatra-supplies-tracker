@@ -123,12 +123,7 @@ ProjectSupply.create!([{
 User.destroy_all
 User.create!([{
   name: "Joan",
-  email: "joan@email.com,
-  password: "test"
-},
-{
-  name: "Laura",
-  email: "laura@email.com",
+  email: "joan@email.com", 
   password: "test"
 },
 {

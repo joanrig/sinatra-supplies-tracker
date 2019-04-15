@@ -13,16 +13,18 @@ class ProjectsController < ApplicationController
   post '/projects' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
-    p = params[:name].split.map(&:capitalize).join(' ')
+    p = params[:name].split.map{|word| word.capitalize}.join(' ')
 
-    @found = Project.find_by(name: p)
-    if @found
-      flash[:message] = "This project already exits, redirecting you to its page."
-      redirect to "/projects/#{@found.id}"
-    else
-      params.delete("_method")
-      params[:name].downcase
-      @project = Project.create(params)
+
+    @user.projects.each do |project|
+      if p == project.name.split.map{|word| word.capitalize}.join(' ')
+        flash[:message] = "This project already exits, redirecting you to its page."
+        redirect to "/projects/#{@found.id}"
+      else
+        params.delete("_method")
+        params[:name].downcase
+        @project = Project.create(params)
+      end
     end
 
     @project.user_id = @user.id
@@ -77,14 +79,4 @@ class ProjectsController < ApplicationController
     redirect to "/users/dashboard/#{@user.id}"
   end
 
-
-
-
-  # helpers do
-  #   def vet_user_and_project
-  #     @user = Helpers.current_user(session)
-  #     Helpers.must_login(session)
-  #     @project = Project.find_by_id(params[:id])
-  #   end
-  # end
 end
