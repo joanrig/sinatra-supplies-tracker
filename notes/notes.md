@@ -34,6 +34,7 @@ to ask:
 
     navbar doesn't know what project is on edit show page:
 
+<<<<<<< HEAD
     <table id="navbar">
       <tr>
         <th><a href="/projects/<%= @project.id %>">Edit Project Info</a></th>
@@ -85,6 +86,31 @@ to ask:
     #   end
     #   erb :'/supplies/index'
     # end
+=======
+>>>>>>> a0cba4b26d2e7e11a6a6ce7461c32abedce75415
 
-lu
-delete '/greetups/:id' do   set_greetup   #@greetup = Greetup.find(params[:id])   if authorized_to_edit?(@greetup)   #if current_user == @greetup.user   #@greetups = Greetup.all     @greetup.destroy      flash[:message] = "Successfully deleted #{@greetup.name}."     redirect '/greetups'   else     redirect '/greetups'   end end
+
+
+    post '/supplies' do
+      @user = Helpers.current_user(session)
+      Helpers.must_login(session)
+
+      @found = Supply.find_by(name: params[:name].downcase)
+      binding.pry
+      if @found
+        #flash message - this supply already exits, redirecting you to its page
+        redirect to "/supplies/#{@found.id}"
+      else
+        params.delete("_method")
+        params[:name].downcase
+        @supply = Supply.create(params)
+      end
+
+      if @supply.save
+        #flash[:message] = "Successfully created supply."
+        erb :'/supplies/show'
+      else
+        #flash[:message] = "Please make sure your supply has a name."
+        redirect to '/supplies/new'
+      end
+    end

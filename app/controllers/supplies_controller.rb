@@ -7,30 +7,6 @@ class SuppliesController < ApplicationController
     erb :'/supplies/new'
   end
 
-  post '/supplies' do
-    @user = Helpers.current_user(session)
-    Helpers.must_login(session)
-
-    @found = Supply.find_by(name: params[:name].downcase)
-
-    if @found
-      #flash message - this supply already exits, redirecting you to its page
-      redirect to "/supplies/#{@found.id}"
-    else
-      params.delete("_method")
-      params[:name].downcase
-      @supply = Supply.create(params)
-    end
-
-    if @supply.save
-      #flash[:message] = "Successfully created supply."
-      erb :'/supplies/show'
-    else
-      #flash[:message] = "Please make sure your supply has a name."
-      redirect to '/supplies/new'
-    end
-  end
-
   patch '/assign/:id/edit' do
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
@@ -39,7 +15,7 @@ class SuppliesController < ApplicationController
 
     if p
       @supplies = p.map do |supply_name|
-        Supply.find_or_create_by(name: supply_name) if supply_name != ""
+        Supply.find_or_create_by(name: supply_name.downcase) if supply_name != ""
       end
     end
 
