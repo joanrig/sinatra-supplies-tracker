@@ -31,3 +31,7 @@
   background-color: #def0f2;
   color: black;
 }
+
+body {
+  background-image: url("public/images/zengarden.jpg");
+}

@@ -18,7 +18,7 @@ Project.create!([{
   user_id: "2"
 },
 {
-  name: "Art of Math",
+  name: "Art Of Math",
   project_type: "class",
   date: "April 24, 2019",
   attendees: "10",
@@ -128,22 +128,21 @@ ProjectSupply.create!([{
 }])
 
 
-
 User.destroy_all
 User.create!([{
   name: "Joan",
-  email: "joan@gradlab.com",
-  password: "password"
+  email: "joan@email.com,
+  password: "test"
 },
 {
   name: "Laura",
-  email: "laura@quinby.com",
-  password: "password"
+  email: "laura@email.com",
+  password: "test"
 },
 {
-  name: "Frances",
-  email: "frances_h@mom_of_two.com",
-  password: "password"
+  name: "Wonder Woman",
+  email: "wonder@wonder.com",
+  password: "test"
 },
 {
   name: "Dr. Who",
