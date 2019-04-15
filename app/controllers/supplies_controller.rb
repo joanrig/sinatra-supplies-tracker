@@ -17,6 +17,11 @@ class SuppliesController < ApplicationController
       p.map do |supply_name|
         supply = Supply.find_or_create_by(name: supply_name.downcase) if supply_name != ""
         if supply
+          supply.vendor = nil
+          supply.website = nil
+          supply.unit_type = nil
+          supply.price_per_unit =  nil
+          supply = {name: supply.name.downcase}
           supply.save
           @project.supplies << supply
         end
