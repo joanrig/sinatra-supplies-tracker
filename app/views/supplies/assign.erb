@@ -30,7 +30,6 @@
   <br>
 
   <% unless @other.empty? %>
-  <% binding.pry %>
     <% @other.uniq.map do |supply| %>
       <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][supplies][]" value="<%= supply.name %>">  <%= supply.name %><br>
     <% end %>

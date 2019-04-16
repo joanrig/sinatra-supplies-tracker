@@ -26,8 +26,8 @@ to ask:
 
     # get '/supplies/assign/project/:id' do
     #   binding.pry
-    #   @user = Helpers.current_user(session)
-    #   Helpers.must_login(session)
+    #   @user = current_user
+    #   must_login
     #   @project = Project.find_by(id: params[:id])
     #   erb :'/supplies/assign'
     # end
@@ -70,8 +70,8 @@ to ask:
 
 
     # get '/supplies' do
-    #   @user = Helpers.current_user(session)
-    #   Helpers.must_login(session)
+    #   @user = current_user
+    #   must_login
     #
     #   @supplies = Supply.all.map {|supply| supply.delete if supply.name = ""}
     #   @my_supplies = []
@@ -92,8 +92,8 @@ to ask:
 
 
     post '/supplies' do
-      @user = Helpers.current_user(session)
-      Helpers.must_login(session)
+      @user = current_user
+      must_login
 
       @found = Supply.find_by(name: params[:name].downcase)
       binding.pry

@@ -45,15 +45,15 @@ class UsersController < ApplicationController
   end
 
   get '/users/logout' do
-    if Helpers.is_logged_in?(session)
+    if is_logged_in?
       session.clear
       redirect to '/'
     end
   end
 
   get '/users/dashboard/:id' do
-    @user = Helpers.current_user(session)
-    Helpers.must_login(session)
+    @user = current_user
+    must_login
     @projects = @user.projects
     erb :'/users/dashboard'
   end

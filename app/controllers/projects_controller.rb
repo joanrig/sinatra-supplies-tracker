@@ -4,15 +4,16 @@ class ProjectsController < ApplicationController
 
 
   get '/projects/new' do #works
-    @user = Helpers.current_user(session)
-    Helpers.must_login(session)
+  
+    @user = current_user
+    must_login
     session[:user_id]  = @user.id
     erb :'/projects/new'
   end
 
   post '/projects' do
-    @user = Helpers.current_user(session)
-    Helpers.must_login(session)
+    @user = current_user
+    must_login
     p = params[:name].split.map{|word| word.capitalize}.join(' ')
 
     if @user.projects #don't create if found
@@ -40,8 +41,8 @@ class ProjectsController < ApplicationController
 
   get '/projects/:id' do
     #get show page with edit button
-    @user = Helpers.current_user(session)
-    Helpers.must_login(session)
+    @user = current_user
+    must_login
 
     @project = Project.find_by_id(params[:id])
     if @project
@@ -52,15 +53,15 @@ class ProjectsController < ApplicationController
   end
 
   get '/projects/:id/edit' do#get edit page
-    @user = Helpers.current_user(session)
-    Helpers.must_login(session)
+    @user = current_user
+    must_login
     @project = Project.find_by_id(params[:id])
     erb :'/projects/edit'
   end
 
   patch '/:id' do#update project
-    @user = Helpers.current_user(session)
-    Helpers.must_login(session)
+    @user = current_user
+    must_login
     @project = Project.find_by_id(params[:id])
 
     params.delete(:_method)
@@ -71,8 +72,8 @@ class ProjectsController < ApplicationController
   end
 
   get '/projects/:id/delete' do
-    @user = Helpers.current_user(session)
-    Helpers.must_login(session)
+    @user = current_user
+    must_login
     @project = Project.find_by_id(params[:id])
 
     if @project.user.id == @user.id
