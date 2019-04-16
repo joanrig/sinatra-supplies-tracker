@@ -25,7 +25,6 @@ https://medium.com/@joanrigdon/my-first-sinatra-web-app-part-2-routes-5191ca0293
 3. Part 3. Fixing privacy problems
 https://medium.com/@joanrigdon/sinatra-web-app-privacy-problems-68b94a382471
 
-
 ## Videos
 
 Here is a 10-minute video walkthrough of how this program works: https://www.loom.com/share/b7ba598fc12e41b6aa56a7937924dba8
@@ -50,7 +49,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+The web app is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Code of Conduct
 
