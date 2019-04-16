@@ -1,4 +1,4 @@
-##Welcome to Supplies Tracker!
+## Welcome to your new  Supplies Tracker!
 
 You can use this web app to create projects and then track supplies fo each project.
 
@@ -12,8 +12,7 @@ Your dashboard (link on top of every page) shows all your projects and all your 
 
 I hope you can use this free app to track the supplies in your life!
 
-
-##Blog Posts
+## Blog Posts
 
 You can read more about the development of this web app in these blog posts:
 
@@ -27,7 +26,7 @@ https://medium.com/@joanrigdon/my-first-sinatra-web-app-part-2-routes-5191ca0293
 https://medium.com/@joanrigdon/sinatra-web-app-privacy-problems-68b94a382471
 
 
-##Videos
+## Videos
 
 Here is a 10-minute video walkthrough of how this program works: https://www.loom.com/share/b7ba598fc12e41b6aa56a7937924dba8
 
