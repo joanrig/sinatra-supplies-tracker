@@ -4,7 +4,6 @@ class ProjectsController < ApplicationController
 
 
   get '/projects/new' do #works
-  
     @user = current_user
     must_login
     session[:user_id]  = @user.id
