@@ -55,6 +55,7 @@ class UsersController < ApplicationController
     @user = current_user
     must_login
     @projects = @user.projects
+    binding.pry
     erb :'/users/dashboard'
   end
 

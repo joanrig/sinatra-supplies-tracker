@@ -26,16 +26,14 @@ class ProjectsController < ApplicationController
       end
     end
 
-    if @user.projects = []
-      @new = Project.create(params)
-      @user.projects << @new
-    end
     @new.user_id = @user.id
+    @user.projects << @new
 
     if @new
       flash[:message] = "Project successfully created."
       redirect to "/projects/#{@new.id}"
     end
+    
   end
 
   get '/projects/:id' do
