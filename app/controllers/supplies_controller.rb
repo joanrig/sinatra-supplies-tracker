@@ -15,20 +15,25 @@ class SuppliesController < ApplicationController
 
     if p
       p.map do |supply_name|
-        supply = Supply.find_or_create_by(name: supply_name.downcase) if supply_name != ""
-        if supply
-          supply.vendor = nil
-          binding.pry
-          supply.website = nil
-          supply.unit_type = nil
-          supply.price_per_unit =  nil
-          supply[:name] = supply.name.downcase
-          supply.save
-          flash[:message] = "Supply successfully added to your project."
-          @project.supplies << supply
+        @user.projects.each do |project|
+          project.supplies.each do |supply|
+            if supply_name.split.map{|word| word.downcase}.join(' ') == supply.name .split.map{|word| word.downcase}.join(' ')
+              @project.supplies << supply
+              @project.sve
+              flash[:message] = "You've already created this supply for another one of your projects. Successfully added supply to this project, too."
+            else
+              new_supply = Supply.new(name: supply_name.downcase) if supply_name != ""
+              new_supply.save
+              @project.supplies << new_supply
+              @project.save
+              flash[:message] = "Supply successfully created and added to your project."
+            end
+          end
         end
       end
     end
+
+
 
     @project.save
     redirect "/supplies/assign/#{@project.id}"

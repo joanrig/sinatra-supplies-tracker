@@ -27,10 +27,11 @@ class ProjectsController < ApplicationController
       end
     end
 
-    if !@user.projects
+    if @user.projects = []
       @new = Project.create(params)
+      @user.projects << @new
     end
-
+    binding.pry
     @new.user_id = @user.id
 
     if @new
