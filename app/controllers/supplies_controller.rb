@@ -12,28 +12,23 @@ class SuppliesController < ApplicationController
     Helpers.must_login(session)
     @project = Project.find_by(id: params[:id])
     p = params[:user][:project_ids][:supplies]
+    p.delete("")
 
-    if p
-      p.map do |supply_name|
-        @user.projects.each do |project|
-          project.supplies.each do |supply|
-            if supply_name.split.map{|word| word.downcase}.join(' ') == supply.name .split.map{|word| word.downcase}.join(' ')
-              @project.supplies << supply
-              @project.sve
-              flash[:message] = "You've already created this supply for another one of your projects. Successfully added supply to this project, too."
-            else
-              new_supply = Supply.new(name: supply_name.downcase) if supply_name != ""
-              new_supply.save
-              @project.supplies << new_supply
-              @project.save
-              flash[:message] = "Supply successfully created and added to your project."
-            end
-          end
-        end
+    p.map do |new_supply_name|
+      @found = @user.supplies.where(name: "#{new_supply_name}")
+      if @found.empty?
+        new_supply = Supply.new(name: new_supply_name.downcase)
+        binding.pry
+        new_supply.user_id = @user.id
+        new_supply.save
+        @project.supplies << new_supply #succesfully creates item
+        flash[:message] = "Successfully created new supply and added it to this project."
+      else
+        @project.supplies << @found
+        binding.pry
+        @project.save
       end
     end
-
-
 
     @project.save
     redirect "/supplies/assign/#{@project.id}"
@@ -43,24 +38,8 @@ class SuppliesController < ApplicationController
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
     @project = Project.find_by(id: params[:id])
-
-    if @project
-      @current = @project.supplies.uniq
-      @all = []
-      @user.projects.each do |project|
-        s = project.supplies
-        s.each do |supply|
-          @all << supply
-        end
-      end
-    end
-
-    if @all && @current
-      #@current are new supplies that may or may not be included in @all/ this removes overlap.
-      @other = @all + @current - @current
-      @other.uniq
-    end
-
+    @other = (@user.supplies + @project.supplies - @project.supplies).uniq
+    binding.pry
     erb :'/supplies/assign'
   end
 

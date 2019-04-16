@@ -6,6 +6,7 @@ class CreateSupplies < ActiveRecord::Migration
       t.string :website
       t.string :unit_type
       t.decimal :price_per_unit
+      t.integer :user_id
     end
   end
 end

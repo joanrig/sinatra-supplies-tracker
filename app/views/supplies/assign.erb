@@ -6,54 +6,42 @@
   </tr>
   </table>
 
-<br>
-<h2>Project Supplies</h2>
-<br>
+  <br>
+  <h2>Project Supplies</h2>
+  <br>
+  <h1><%= @project.name.capitalize %></h1>
 
-<h1><%= @project.name.capitalize %></h1>
+  <br>
+  <h4>Supplies already assigned to this project</h4>
+  <p>(uncheck to remove)</p>
+  <br>
+  <form action="/supplies/assign/<%=@project.id%>/edit" method="post">
+    <input type="hidden" id="hidden" value="patch" name="_method">
 
-<br>
-<h4>Supplies already assigned to this project</h4>
-<p>(uncheck to remove)</p>
-<br>
-<form action="/supplies/assign/<%=@project.id%>/edit" method="post">
-  <input type="hidden" id="hidden" value="patch" name="_method">
-
-  <% if @current %>
-    <% if @current.size > 1 %>
-      <% @current.each do |supply| %>
-        <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][supplies][]" value="<%= supply.name %>" checked>  <%= supply.name %><br>
-      <% end %>
-    <% elsif @current.size == 1 %>
-        <input type="checkbox" id="<%= @current.first.name %>" name="user[project_ids][supplies][]" value="<%= @current.first.name %>" checked>  <%= @current.first.name %><br>
+  <% if @project.supplies.uniq.size >= 1 %>
+    <% @project.supplies.uniq.map do |supply| %>
+      <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][supplies][]" value="<%= supply.name %>" checked>  <%= supply.name %><br>
     <% end %>
   <% end %>
 
-
-
   <br>
   <br>
-
   <h4>Would you like to add any of these supplies from your other projects?</h4>
   <br>
-  <% if @other %>
-    <% if @other.size > 1 %>
-      <% @other.uniq.each do |supply| %>
-        <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][supplies][]" value="<%= supply.name %>">  <%= supply.name %><br>
-      <% end %>
-    <% elsif @other.size == 1 %>
-      <% only = @other.first %>
-      <input type="checkbox" id="<%= only.name %>" name="user[project_ids][supplies][]" value="<%= only.name %>" >  <%= only.name %><br>
+
+  <% unless @other.empty? %>
+  <% binding.pry %>
+    <% @other.uniq.map do |supply| %>
+    <% binding.pry %>
+      <input type="checkbox" id="<%= supply.name %>" name="user[project_ids][supplies][]" value="<%= supply.name %>">  <%= supply.name %><br>
     <% end %>
   <% end %>
 
-
   <br>
   <br>
-
   <h4> or, create some new supplies:</h4>
   <p>You can edit these new supplies later, in your <a href="/users/dashboard/<%= @user.id %>">dashboard</a></p>
-<br>
+  <br>
   <input type="string"  name="user[project_ids][supplies][]">
   <br>
   <br>
@@ -63,9 +51,7 @@
   <input type="string" name="user[project_ids][supplies][]">
   <br>
   <br>
-
-<br>
-
+  <br>
   <h4>Changes look good? If so, click below! </h4>
   <br>
   <input type="submit" id="submit" value="Update Current Supplies">

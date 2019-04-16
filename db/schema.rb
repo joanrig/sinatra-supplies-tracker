@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20190410005034) do
     t.string  "website"
     t.string  "unit_type"
     t.decimal "price_per_unit"
+    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|

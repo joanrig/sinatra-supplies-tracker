@@ -15,7 +15,6 @@ class ProjectsController < ApplicationController
     Helpers.must_login(session)
     p = params[:name].split.map{|word| word.capitalize}.join(' ')
 
-# if is in the wrong place
     if @user.projects #don't create if found
       @user.projects.each do |project|
         if p == project.name.split.map{|word| word.capitalize}.join(' ')
@@ -31,7 +30,6 @@ class ProjectsController < ApplicationController
       @new = Project.create(params)
       @user.projects << @new
     end
-    binding.pry
     @new.user_id = @user.id
 
     if @new
@@ -41,7 +39,6 @@ class ProjectsController < ApplicationController
   end
 
   get '/projects/:id' do
-    binding.pry
     #get show page with edit button
     @user = Helpers.current_user(session)
     Helpers.must_login(session)

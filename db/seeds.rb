@@ -55,6 +55,7 @@ Supply.create!([{
   website: "http://www.amazon.com",
   unit_type: "gallon",
   price_per_unit: 5,
+  user_id: "4"
 },
 {
   name: "PVC",
@@ -62,6 +63,7 @@ Supply.create!([{
   website: "http://www.homedepot.com",
   unit_type: "6 feet",
   price_per_unit: 4,
+  user_id: "1"
 },
 {
   name: "paint",
@@ -69,6 +71,7 @@ Supply.create!([{
   website: "http://www.michaels.com",
   unit_type: "gallon",
   price_per_unit: 9,
+  user_id: "2"
 },
 {
   name: "clay",
@@ -76,6 +79,7 @@ Supply.create!([{
   website: "http://www.amazon.com",
   unit_type: "20 pounds",
   price_per_unit: 40,
+  user_id: "4"
 },
 {
   name: "sonic screwdriver",
@@ -83,6 +87,7 @@ Supply.create!([{
   website: "http://www.amazon.com",
   unit_type: "box of 12",
   price_per_unit: 20,
+  user_id: "4"
 },
 {
   name: "food coloring",
@@ -90,6 +95,7 @@ Supply.create!([{
   website: "",
   unit_type: "box of 4",
   price_per_unit: 6,
+  user_id: "3"
 }])
 
 
