@@ -1,11 +1,5 @@
 class SuppliesController < ApplicationController
 
-  # get '/supplies/new' do
-  #   @user = Helpers.current_user(session)
-  #   Helpers.must_login(session)
-  #   session[:user_id]  = @user.id
-  #   erb :'/supplies/new'
-  # end
 
   patch '/assign/:id/edit' do
     @user = Helpers.current_user(session)
@@ -13,23 +7,22 @@ class SuppliesController < ApplicationController
     @project = Project.find_by(id: params[:id])
     p = params[:user][:project_ids][:supplies]
     p.delete("")
+    @project.supplies.clear
+    binding.pry
 
-    p.map do |new_supply_name|
-      @found = @user.supplies.where(name: "#{new_supply_name}")
-      if @found.empty?
-        new_supply = Supply.new(name: new_supply_name.downcase)
-        binding.pry
+    @supplies = p.map do |supply_name|#from text fields
+      if @user.supplies.where(name: "#{supply_name}").empty?#=> array
+        new_supply = Supply.new(name: supply_name.downcase)
         new_supply.user_id = @user.id
         new_supply.save
         @project.supplies << new_supply #succesfully creates item
         flash[:message] = "Successfully created new supply and added it to this project."
       else
-        @project.supplies << @found
         binding.pry
-        @project.save
+        found = @user.supplies.find_by(name: supply_name)
+        @project.supplies <<  found if found
       end
     end
-
     @project.save
     redirect "/supplies/assign/#{@project.id}"
   end
@@ -38,7 +31,7 @@ class SuppliesController < ApplicationController
     @user = Helpers.current_user(session)
     Helpers.must_login(session)
     @project = Project.find_by(id: params[:id])
-    @other = (@user.supplies + @project.supplies - @project.supplies).uniq
+    @other = @user.supplies + @project.supplies - @project.supplies
     binding.pry
     erb :'/supplies/assign'
   end
