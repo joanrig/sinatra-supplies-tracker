@@ -29,7 +29,12 @@ class UsersController < ApplicationController
   end
 
   get '/users/login' do
-    erb :'/users/login'
+    # if is_logged_in?
+    #   @user = current_user
+    #   redirect to "/users/dashboard/#{@user.id}"
+    # else
+      erb :'/users/login'
+    # end
   end
 
   post '/users/login' do
@@ -55,7 +60,6 @@ class UsersController < ApplicationController
     @user = current_user
     must_login
     @projects = @user.projects
-    binding.pry
     erb :'/users/dashboard'
   end
 

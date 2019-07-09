@@ -13,27 +13,34 @@ class ProjectsController < ApplicationController
   post '/projects' do
     @user = current_user
     must_login
+    #params =>{xx:"hello"}
     p = params[:name].split.map{|word| word.capitalize}.join(' ')
 
-    if @user.projects #don't create if found
+    if !@user.projects.empty? #if user already has projs
       @user.projects.each do |project|
         if p == project.name.split.map{|word| word.capitalize}.join(' ')
           flash[:message] = "This project already exists, redirecting you to its page."
           redirect to "/projects/#{@found.id}"
         else
+          binding.pry
           @new = Project.create(params)
         end
       end
+    else
+      binding.pry
+      @new = Project.create(params)
     end
 
-    @new.user_id = @user.id
+   #@user.projects.build(params)
+
+    #@new.user_id = @user.id
     @user.projects << @new
 
     if @new
       flash[:message] = "Project successfully created."
       redirect to "/projects/#{@new.id}"
     end
-    
+
   end
 
   get '/projects/:id' do

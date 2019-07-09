@@ -17,7 +17,6 @@ class SuppliesController < ApplicationController
         @project.supplies << new_supply #succesfully creates item
         flash[:message] = "Successfully created new supply and added it to this project."
       else
-        #binding.pry
         found = @user.supplies.find_by(name: supply_name)
         @project.supplies <<  found if found
       end

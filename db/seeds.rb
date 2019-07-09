@@ -4,7 +4,7 @@ Project.create!([{
   project_type: "event",
   date: "May 4, 2019",
   attendees: "100",
-  supplies_budget: "300",
+  supplies_budget: "300.00",
   user_id: "1"
 },
 {
