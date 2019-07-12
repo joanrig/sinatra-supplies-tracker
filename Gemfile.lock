@@ -91,6 +91,9 @@ GEM
     sinatra-activerecord (2.0.13)
       activerecord (>= 3.2)
       sinatra (>= 1.0)
+    sinatra-flash (0.3.0)
+      sinatra (>= 1.0.0)
+    sqlite3 (1.4.1)
     thin (1.7.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -124,11 +127,13 @@ DEPENDENCIES
   shotgun
   sinatra
   sinatra-activerecord
+  sinatra-flash
+  sqlite3
   thin
   tux
 
 RUBY VERSION
-   ruby 2.6.1p33
+   ruby 2.6.3p62
 
 BUNDLED WITH
-   2.0.1
+   2.0.2
