@@ -1,2 +1,2 @@
-require './server.rb'
+require './sinatra-supplies-tracker.rb'
 run Sinatra::Application
